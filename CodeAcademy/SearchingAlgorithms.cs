@@ -1,5 +1,5 @@
 ﻿// NOT-1: Interpolation ~5 sətir ChatGPT-dən götürdüm.
-// NOT-2: Fibonacci tam işləmir nəsə.
+// NOT-2: Fibonacci-nin kodu yaman çox trial-error oldu...
 // NOT-3: Binary bir sual var.
 
 #region Searching Algorithms
@@ -140,50 +140,67 @@ int InterpolationSearch(int[] array, int searchedElement)
 }
 
 #region Fibonacci Search
-(int, int) ClosestFibonacciNumbers(int num)
+int CountFibonacciNumbers(int endNum)
 {
     // pivots;
-    int fib1 = 1;
-    int fib2 = 1;
+    int fib1 = 1;  // Start with 1, 2 instead of 0, 1.
+    int fib2 = 2;
 
     int placeholder;
+    int size = 2;
 
-    while (fib1 + fib2 <= num)
+    while (fib1 + fib2 <= endNum)
     {
         placeholder = fib2;
         fib2 += fib1;
         fib1 = placeholder;
+
+        size++;
     }
 
-    return (fib1, fib2);
+    return size;
+}
+
+int[] FibonacciSequence(int num)
+{
+    int size = CountFibonacciNumbers(num) - 1;  // -1 because we need up to fib1, not fib2
+
+    int[] fibSeq = new int[size];
+
+    fibSeq[0] = 1;
+    fibSeq[1] = 2;
+
+    for (int i = 2; i < size; i++)
+    {
+        fibSeq[i] = fibSeq[i-2] + fibSeq[i-1];
+    }
+
+    return fibSeq;
 }
 
 int FibonacciSearch(int[] array, int searchedElement)
 {
-    // Fibonacci Search is conceptually simialr to Ternary search, but with
-    // Fibonacci-based divisions instead of fixed 1/3 and 2/3.
+    int[] fibSeq = FibonacciSequence(array.Length);
+    int pivot = fibSeq.Length - 2;
+    int index = fibSeq[^1];
 
-    int left = 0; // offset
-    int right = array.Length - 1;
-
-    while (left < right)
+    while (pivot >= 0)  // While fibSeq[steps] is valid statement
     {
-        //Console.WriteLine("Loop");
-        (int fib1, int fib2) = ClosestFibonacciNumbers(right - left);
-
-        // Adding offsets
-        fib1 += left;
-        fib2 += left;
-
-        if (array[fib1] == searchedElement) { return fib1; }
-        else if (array[fib2] == searchedElement) { return fib2; }
-        else if (array[fib1] < searchedElement && searchedElement < array[fib2]) 
+        // Check whether update is needed 
+        if (array[index] < searchedElement)
         {
-            left = fib1 + 1;
-            right = fib2 - 1;
+            index += fibSeq[pivot--];
+            //Console.WriteLine("INDEX " + index);
         }
-        else if (searchedElement < array[fib1]) { right = fib1 - 1; }
-        else { left = fib2 + 1; }
+        else if (array[index] > searchedElement)
+        {
+            index -= fibSeq[pivot--];
+            //Console.WriteLine("INDEX " + index);
+        }
+
+        // Check if update worked (if any)
+        if (array[index] == searchedElement) { return index; }
+
     }
 
     return -1;
@@ -203,7 +220,7 @@ int[] array = [-21, -19, -13, -6, 0, 2, 9, 10, 13, 17, 22, 27];
 Console.WriteLine("SEARCH");
 for (int i = 0; i < array.Length; i++)
 {
-    int foundIndex = BinarySearch(array, 0, array.Length, array[i]);
+    int foundIndex = FibonacciSearch(array, array[i]);
     if (i == foundIndex)
     {
         Console.WriteLine(i);
@@ -212,7 +229,7 @@ for (int i = 0; i < array.Length; i++)
 }
 
 int searchedElement = 3;
-int index = BinarySearch(array, 0, array.Length, searchedElement);
+int index = FibonacciSearch(array, searchedElement);
 Console.WriteLine(index);
 
 
