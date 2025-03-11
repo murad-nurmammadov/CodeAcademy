@@ -90,17 +90,37 @@
 #region Task 5
 // A,B,C rəqəmləri verilib, 5 ə tam bölünənlərin cəmini ekrana çıxardın.
 
-int a = Convert.ToInt32(Console.ReadLine());
-int b = Convert.ToInt32(Console.ReadLine());
-int c = Convert.ToInt32(Console.ReadLine());
+//int a = Convert.ToInt32(Console.ReadLine());
+//int b = Convert.ToInt32(Console.ReadLine());
+//int c = Convert.ToInt32(Console.ReadLine());
 
-int sum = 0;
+//int sum = 0;
 
-if (a % 5 == 0) { sum += a; }
+//if (a % 5 == 0) { sum += a; }
 
-if (b % 5 == 0) { sum += b; }
+//if (b % 5 == 0) { sum += b; }
 
-if (c % 5 == 0) { sum += c; }
+//if (c % 5 == 0) { sum += c; }
 
-Console.WriteLine(sum);
+//Console.WriteLine(sum);
+#endregion
+
+#region Task 6
+// Verilmiş 2 mərtəbəli ədədin hansı mərtəbə vahidinin daha böyük olduğunu tapın
+
+int num = Convert.ToInt32(Console.ReadLine());
+
+int maxDigit = num % 10;
+
+while (num != 0)
+{
+    int digit = num % 10;
+    if (digit > maxDigit) 
+    { 
+        maxDigit = digit;
+    }
+    num /= 10;
+}
+
+Console.WriteLine(maxDigit);
 #endregion
