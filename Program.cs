@@ -218,17 +218,41 @@
 #region Task 13
 // Bir tam ədədlər massivi verilib. Həmin massivdəki ən böyük ədədi tapan alqoritm yazın.
 
-int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
-int max = nums[0];
+//int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+//int max = nums[0];
 
-for (int i = 1; i < nums.Length; i++)
-{
-    if (nums[i] > max)
-    {
-        max = nums[i];
-    }
-}
+//for (int i = 1; i < nums.Length; i++)
+//{
+//    if (nums[i] > max)
+//    {
+//        max = nums[i];
+//    }
+//}
 
-Console.WriteLine(max);
+//Console.WriteLine(max);
 #endregion
 
+#region Task 14
+// Bir tam ədədlər massivi verilib. Bu massivdə yalnız bir dəfə təkrarlanan
+// elementləri çap edən funksiya yazın.
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7 };
+
+for (int i = 0; i < nums.Length; i++)
+{
+    int counter = 0;
+
+    for (int j = 0; j < nums.Length; j++)
+    {
+        if (nums[i] == nums[j])
+        {
+            counter++;
+        }
+    }
+
+    if (counter == 1)
+    {
+        Console.WriteLine(nums[i]);
+    }
+}
+#endregion
