@@ -108,19 +108,39 @@
 #region Task 6
 // Verilmiş 2 mərtəbəli ədədin hansı mərtəbə vahidinin daha böyük olduğunu tapın
 
-int num = Convert.ToInt32(Console.ReadLine());
+//int num = Convert.ToInt32(Console.ReadLine());
 
-int maxDigit = num % 10;
+//int maxDigit = num % 10;
 
-while (num != 0)
-{
-    int digit = num % 10;
-    if (digit > maxDigit) 
-    { 
-        maxDigit = digit;
-    }
-    num /= 10;
-}
+//while (num != 0)
+//{
+//    int digit = num % 10;
+//    if (digit > maxDigit) 
+//    { 
+//        maxDigit = digit;
+//    }
+//    num /= 10;
+//}
 
-Console.WriteLine(maxDigit);
+//Console.WriteLine(maxDigit);
 #endregion
+
+#region Task 7
+// Fibonacci ardıcıllığının ilk 10 həddini ekrana çıxaran alqoritm yazın.
+
+int fib1 = 0;
+int fib2 = 1;
+
+Console.WriteLine(fib1);
+Console.WriteLine(fib2);
+
+for (int i = 2; i < 10; i++)
+{
+    int _ = fib2;
+    fib2 = fib1 + fib2;
+    fib1 = _;
+
+    Console.WriteLine(fib2);
+}
+#endregion
+
