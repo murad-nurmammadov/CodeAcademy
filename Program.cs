@@ -147,14 +147,29 @@
 #region Task 8
 // Verilmiş n mərtəbəli ədədin ən yüksək mərtəbəsini tapın.
 
-int num = Convert.ToInt32(Console.ReadLine());
+//int num = Convert.ToInt32(Console.ReadLine());
 
-int maxUnit = 1;
+//int maxUnit = 1;
 
-while (num / (maxUnit * 10) >= 1)
+//while (num / (maxUnit * 10) >= 1)
+//{
+//    maxUnit *= 10;
+//}
+
+//Console.WriteLine("Max unit: " + maxUnit);
+#endregion
+
+#region Task 9
+// Bir tam ədədlər massivi verilib. Həmin massivdəki bütün elementlərin
+// cəmini hesablayan bir alqoritm yazın.
+
+int[] nums = { 1, 2, 3, 4, 5 };
+int sum = 0;
+
+for (int i = 0; i < nums.Length; i++)
 {
-    maxUnit *= 10;
+    sum += nums[i];
 }
 
-Console.WriteLine("Max unit: " + maxUnit);
+Console.WriteLine(sum);
 #endregion
