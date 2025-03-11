@@ -163,13 +163,28 @@
 // Bir tam ədədlər massivi verilib. Həmin massivdəki bütün elementlərin
 // cəmini hesablayan bir alqoritm yazın.
 
-int[] nums = { 1, 2, 3, 4, 5 };
-int sum = 0;
+//int[] nums = { 1, 2, 3, 4, 5 };
+//int sum = 0;
+
+//for (int i = 0; i < nums.Length; i++)
+//{
+//    sum += nums[i];
+//}
+
+//Console.WriteLine(sum);
+#endregion
+
+#region Task 10
+// Bir tam ədədlər massivi verilib. Həmin massivdəki bütün cüt
+// ədədləri ekrana çap edən alqoritm yazın.
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
 
 for (int i = 0; i < nums.Length; i++)
 {
-    sum += nums[i];
+    if (nums[i] % 2 == 0)
+    {
+        Console.WriteLine(nums[i]);
+    }
 }
-
-Console.WriteLine(sum);
 #endregion
