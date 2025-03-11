@@ -178,13 +178,29 @@
 // Bir tam ədədlər massivi verilib. Həmin massivdəki bütün cüt
 // ədədləri ekrana çap edən alqoritm yazın.
 
-int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+//int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+
+//for (int i = 0; i < nums.Length; i++)
+//{
+//    if (nums[i] % 2 == 0)
+//    {
+//        Console.WriteLine(nums[i]);
+//    }
+//}
+#endregion
+
+#region Task 11
+// Bir tam ədədlər massivi verilib. Həmin massivdəki bütün elementlərin
+// orta qiymətini hesablayan alqoritm yazın.
+
+int[] nums = { 1, 2, 3, 4, 5, -3 };
+int sum = 0;
 
 for (int i = 0; i < nums.Length; i++)
 {
-    if (nums[i] % 2 == 0)
-    {
-        Console.WriteLine(nums[i]);
-    }
+    sum += nums[i];
 }
+
+Console.WriteLine(sum / nums.Length);
 #endregion
+
