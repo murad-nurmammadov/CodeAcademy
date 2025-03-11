@@ -128,19 +128,33 @@
 #region Task 7
 // Fibonacci ardıcıllığının ilk 10 həddini ekrana çıxaran alqoritm yazın.
 
-int fib1 = 0;
-int fib2 = 1;
+//int fib1 = 0;
+//int fib2 = 1;
 
-Console.WriteLine(fib1);
-Console.WriteLine(fib2);
+//Console.WriteLine(fib1);
+//Console.WriteLine(fib2);
 
-for (int i = 2; i < 10; i++)
-{
-    int _ = fib2;
-    fib2 = fib1 + fib2;
-    fib1 = _;
+//for (int i = 2; i < 10; i++)
+//{
+//    int _ = fib2;
+//    fib2 = fib1 + fib2;
+//    fib1 = _;
 
-    Console.WriteLine(fib2);
-}
+//    Console.WriteLine(fib2);
+//}
 #endregion
 
+#region Task 8
+// Verilmiş n mərtəbəli ədədin ən yüksək mərtəbəsini tapın.
+
+int num = Convert.ToInt32(Console.ReadLine());
+
+int maxUnit = 1;
+
+while (num / (maxUnit * 10) >= 1)
+{
+    maxUnit *= 10;
+}
+
+Console.WriteLine("Max unit: " + maxUnit);
+#endregion
