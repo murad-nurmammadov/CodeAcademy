@@ -55,34 +55,52 @@
 // Tələbə balını daxil edir, bu bala uyğun, hərf balı tapırsınız.
 // (Məsələn: 91 -> A, 75 -> C)
 
-int score = Convert.ToInt32(Console.ReadLine());
+//int score = Convert.ToInt32(Console.ReadLine());
 
-if (score > 100 || score < 0)
-{
-    Console.WriteLine("Invalid score");
-}
-else if (score >= 91)
-{
-    Console.WriteLine("A");
-}
-else if (score >= 81)
-{
-    Console.WriteLine("B");
-}
-else if (score >= 71)
-{
-    Console.WriteLine("C");
-}
-else if (score >= 61)
-{
-    Console.WriteLine("D");
-}
-else if (score >= 51)
-{
-    Console.WriteLine("E");
-}
-else
-{
-    Console.WriteLine("F");
-}
+//if (score > 100 || score < 0)
+//{
+//    Console.WriteLine("Invalid score");
+//}
+//else if (score >= 91)
+//{
+//    Console.WriteLine("A");
+//}
+//else if (score >= 81)
+//{
+//    Console.WriteLine("B");
+//}
+//else if (score >= 71)
+//{
+//    Console.WriteLine("C");
+//}
+//else if (score >= 61)
+//{
+//    Console.WriteLine("D");
+//}
+//else if (score >= 51)
+//{
+//    Console.WriteLine("E");
+//}
+//else
+//{
+//    Console.WriteLine("F");
+//}
+#endregion
+
+#region Task 5
+// A,B,C rəqəmləri verilib, 5 ə tam bölünənlərin cəmini ekrana çıxardın.
+
+int a = Convert.ToInt32(Console.ReadLine());
+int b = Convert.ToInt32(Console.ReadLine());
+int c = Convert.ToInt32(Console.ReadLine());
+
+int sum = 0;
+
+if (a % 5 == 0) { sum += a; }
+
+if (b % 5 == 0) { sum += b; }
+
+if (c % 5 == 0) { sum += c; }
+
+Console.WriteLine(sum);
 #endregion
