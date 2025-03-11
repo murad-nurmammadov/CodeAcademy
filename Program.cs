@@ -236,23 +236,45 @@
 // Bir tam ədədlər massivi verilib. Bu massivdə yalnız bir dəfə təkrarlanan
 // elementləri çap edən funksiya yazın.
 
-int[] nums = { 1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7 };
+//int[] nums = { 1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7 };
+
+//for (int i = 0; i < nums.Length; i++)
+//{
+//    int counter = 0;
+
+//    for (int j = 0; j < nums.Length; j++)
+//    {
+//        if (nums[i] == nums[j])
+//        {
+//            counter++;
+//        }
+//    }
+
+//    if (counter == 1)
+//    {
+//        Console.WriteLine(nums[i]);
+//    }
+//}
+#endregion
+
+#region Task 15
+// Sizə bir tam ədədlər massivi və silinəcək ədəd verilir. Əgər ədəd
+// massivdə yoxdursa, Not found yazılsın. Əks halda, həmin ədəd silinsin
+// və massivin sonuna `0` əlavə edilsin ki, ölçü dəyişməsin.
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+int num = 3;
 
 for (int i = 0; i < nums.Length; i++)
 {
-    int counter = 0;
-
-    for (int j = 0; j < nums.Length; j++)
+    if (nums[i] == num)
     {
-        if (nums[i] == nums[j])
+        for (int j = i; j < nums.Length - 1; j++)
         {
-            counter++;
+            nums[j] = nums[j + 1];
         }
-    }
-
-    if (counter == 1)
-    {
-        Console.WriteLine(nums[i]);
+        nums[^1] = 0;
+        break;  // Comment this out to delete all occurrences of the number
     }
 }
 #endregion
