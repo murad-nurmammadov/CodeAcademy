@@ -207,10 +207,28 @@
 #region Task 12
 // Bir tam ədədlər massivi verilib. Həmin massivi tərsinə çevirin ekrana çap etdirən alqoritm yazın.
 
-int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+//int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
 
-for (int i = 1; i <= nums.Length; i++)
-{
-    Console.WriteLine(nums[^i]);
-}
+//for (int i = 1; i <= nums.Length; i++)
+//{
+//    Console.WriteLine(nums[^i]);
+//}
 #endregion
+
+#region Task 13
+// Bir tam ədədlər massivi verilib. Həmin massivdəki ən böyük ədədi tapan alqoritm yazın.
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+int max = nums[0];
+
+for (int i = 1; i < nums.Length; i++)
+{
+    if (nums[i] > max)
+    {
+        max = nums[i];
+    }
+}
+
+Console.WriteLine(max);
+#endregion
+
