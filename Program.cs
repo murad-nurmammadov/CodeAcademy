@@ -193,14 +193,24 @@
 // Bir tam ədədlər massivi verilib. Həmin massivdəki bütün elementlərin
 // orta qiymətini hesablayan alqoritm yazın.
 
-int[] nums = { 1, 2, 3, 4, 5, -3 };
-int sum = 0;
+//int[] nums = { 1, 2, 3, 4, 5, -3 };
+//int sum = 0;
 
-for (int i = 0; i < nums.Length; i++)
-{
-    sum += nums[i];
-}
+//for (int i = 0; i < nums.Length; i++)
+//{
+//    sum += nums[i];
+//}
 
-Console.WriteLine(sum / nums.Length);
+//Console.WriteLine(sum / nums.Length);
 #endregion
 
+#region Task 12
+// Bir tam ədədlər massivi verilib. Həmin massivi tərsinə çevirin ekrana çap etdirən alqoritm yazın.
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+
+for (int i = 1; i <= nums.Length; i++)
+{
+    Console.WriteLine(nums[^i]);
+}
+#endregion
