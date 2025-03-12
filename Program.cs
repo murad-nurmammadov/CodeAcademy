@@ -71,14 +71,39 @@
 // Verilmish arrayda hem tek eded olan,
 // hem de 3-e bolunen ededlerin sayini cixaran algorithm
 
-int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+//int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+//int count = 0;
+
+//for (int i = 0; i < nums.Length; i++)
+//{
+//    if (nums[i] % 2 == 1 && nums[i] % 3 == 0)
+//    {
+//        count++;
+//    }
+//}
+
+//Console.WriteLine(count);
+#endregion
+
+#region Task 5
+// Verilmish arrayda murekkeb ededlerin sayini cixaran algorithm misal:input {5,9,12,11} output 2
+
+int[] nums = { 5, 9, 12, 11, 12, 13, 14 };
 int count = 0;
 
 for (int i = 0; i < nums.Length; i++)
 {
-    if (nums[i] % 2 == 1 && nums[i] % 3 == 0)
+    // 0, 1 are neither prime, nor composite.
+    // 2 and 3 are prime.
+    if (nums[i] <= 3) { continue; }
+
+    for (int j = 2; j <= nums[i] / 2; j++)
     {
-        count++;
+        if (nums[i] % j == 0)
+        {
+            count++;
+            break;
+        }
     }
 }
 
