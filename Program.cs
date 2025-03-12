@@ -46,23 +46,41 @@
 #region Task 3
 // Verilmish arrayda en kicik ve en boyuk ededlerin cemini cixaran alogirthm
 
-int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+//int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-int min = nums[0];
-int max = nums[0];
+//int min = nums[0];
+//int max = nums[0];
+
+//for (int i = 0; i < nums.Length; i++)
+//{
+//    if (nums[i] < min)
+//    {
+//        min = nums[i];
+//    }
+
+//    if (nums[i] > max)
+//    {
+//        max = nums[i];
+//    }
+//}
+
+//Console.WriteLine(min + max);
+#endregion
+
+#region Task 4
+// Verilmish arrayda hem tek eded olan,
+// hem de 3-e bolunen ededlerin sayini cixaran algorithm
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int count = 0;
 
 for (int i = 0; i < nums.Length; i++)
 {
-    if (nums[i] < min)
+    if (nums[i] % 2 == 1 && nums[i] % 3 == 0)
     {
-        min = nums[i];
-    }
-
-    if (nums[i] > max)
-    {
-        max = nums[i];
+        count++;
     }
 }
 
-Console.WriteLine(min + max);
+Console.WriteLine(count);
 #endregion
