@@ -1,16 +1,19 @@
-﻿string input = Console.ReadLine();
-string output = "";
+﻿#region Task 1
+// Verilmish ededin mertebelerinin en boyuyunu tapan alqoritm
+// Misal: input 7481, output 8
 
-for  (int i = 0; i < input.Length; i++)
+int num = Convert.ToInt32(Console.ReadLine());
+int maxDigit = 0;
+
+while (num > 0)
 {
-    if (input[i] == 'A' || input[i] == 'a')
+    int digit = num % 10;
+    if (digit > maxDigit)
     {
-        output += 'a';
-    } 
-    else
-    {
-        output += input[i];
+        maxDigit = digit;
     }
+    num /= 10;
 }
 
-Console.WriteLine(output);
+Console.WriteLine(maxDigit);
+#endregion
