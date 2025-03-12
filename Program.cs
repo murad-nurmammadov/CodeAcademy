@@ -22,23 +22,47 @@
 // Verilmish ededin 2 quvveti olub olmadigini tapan alqoritm
 // Misal: input 8 output 2-in quvvetidir ve ya input 9 2-in quvveti deyil
 
-int num = Convert.ToInt32(Console.ReadLine());
-int powerOfTwo = 1;
-bool isPowerOfTwo = false;
+//int num = Convert.ToInt32(Console.ReadLine());
+//int powerOfTwo = 1;
+//bool isPowerOfTwo = false;
 
-while (powerOfTwo <= num)
+//while (powerOfTwo <= num)
+//{
+//    if (powerOfTwo == num)
+//    {
+//        isPowerOfTwo = true;
+//        Console.WriteLine(num + " is a power of two");
+//        break;
+//    }
+//    powerOfTwo *= 2;
+//}
+
+//if (!isPowerOfTwo)
+//{
+//    Console.WriteLine(num + " is NOT a power of two");
+//}
+#endregion
+
+#region Task 3
+// Verilmish arrayda en kicik ve en boyuk ededlerin cemini cixaran alogirthm
+
+int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+int min = nums[0];
+int max = nums[0];
+
+for (int i = 0; i < nums.Length; i++)
 {
-    if (powerOfTwo == num)
+    if (nums[i] < min)
     {
-        isPowerOfTwo = true;
-        Console.WriteLine(num + " is a power of two");
-        break;
+        min = nums[i];
     }
-    powerOfTwo *= 2;
+
+    if (nums[i] > max)
+    {
+        max = nums[i];
+    }
 }
 
-if (!isPowerOfTwo)
-{
-    Console.WriteLine(num + " is NOT a power of two");
-}
+Console.WriteLine(min + max);
 #endregion
