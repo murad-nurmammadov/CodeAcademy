@@ -10,8 +10,11 @@
             //Console.WriteLine(reversedText);
 
             // Task 2
-            int months = Convert.ToInt32(Console.ReadLine());
-            PrintYearAndMonth(months);
+            //int months = Convert.ToInt32(Console.ReadLine());
+            //PrintYearAndMonth(months);
+
+            // Task 3
+            Console.WriteLine(CalculateFactorial(5));
         }
 
         #region Task 1
@@ -44,6 +47,25 @@
             int months = totalMonths % 12;
 
             Console.WriteLine(years + " years, " + months + " months");
+        }
+        #endregion
+
+        #region Task 3
+        // Verilen edein Faktorialı hesablayan metod yazın
+        static int CalculateFactorial(int number)
+        {
+            int factorial = 1;
+
+            if (number == 0) { return 1; }
+            else
+            {
+                for (int i = 1; i <= number; i++)
+                {
+                    factorial *= i;
+                }
+            }
+
+            return factorial;
         }
         #endregion
     }
