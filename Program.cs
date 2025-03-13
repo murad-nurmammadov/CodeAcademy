@@ -5,9 +5,13 @@
         static void Main(string[] args)
         {
             // Task 1
-            string text = Console.ReadLine();
-            string reversedText = ReverseText(text);
-            Console.WriteLine(reversedText);
+            //string text = Console.ReadLine();
+            //string reversedText = ReverseText(text);
+            //Console.WriteLine(reversedText);
+
+            // Task 2
+            int months = Convert.ToInt32(Console.ReadLine());
+            PrintYearAndMonth(months);
         }
 
         #region Task 1
@@ -24,6 +28,22 @@
             }
 
             return reversedText;
+        }
+        #endregion
+
+        #region Task 2
+        // Ayı daxil edirik, nəticəsini il və ay olaraq çıxaran metod yazın.
+        // Məsələn,
+        // 23 daxil edirik, ekrana çıxır: 1 il 11 ay
+        // 24 daxil edirik, ekrana çıxır: 2 il
+        // 7 daxil edirik, ekrana çıxır: 7 ay
+
+        static void PrintYearAndMonth(int totalMonths)
+        {
+            int years = totalMonths / 12;
+            int months = totalMonths % 12;
+
+            Console.WriteLine(years + " years, " + months + " months");
         }
         #endregion
     }
