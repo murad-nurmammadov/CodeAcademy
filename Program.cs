@@ -14,7 +14,12 @@
             //PrintYearAndMonth(months);
 
             // Task 3
-            Console.WriteLine(CalculateFactorial(5));
+            //Console.WriteLine(CalculateFactorial(5));
+
+            // Task 4
+            string name = Console.ReadLine();
+            string result = RemoveSpaces(name);
+            Console.WriteLine(result);
         }
 
         #region Task 1
@@ -66,6 +71,28 @@
             }
 
             return factorial;
+        }
+        #endregion
+
+        #region Task 4
+        // Parametr olaraq 1 string dəyər qəbul edən və həmin string dəyəri icində
+        // bosluqlar qalmayacaq hala gətirən metod.Misal olaraq, name = " Hikmet  Abbasov "
+        // deyə bir variable-mız varsa onu yaratdigimiz metoda göndərdikdə variable-daki
+        // dəyər "HikmətAbbasov" olmalıdır.
+
+        static string RemoveSpaces(string text)
+        {
+            string output = "";
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] != ' ')
+                {
+                    output += text[i];
+                }
+            }
+
+            return output;
         }
         #endregion
     }
