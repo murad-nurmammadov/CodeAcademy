@@ -44,11 +44,33 @@
                     Console.WriteLine($"{j}) {variants[j].Text}");
                 }
 
-                byte ans = Convert.ToByte(Console.ReadLine());
+                bool correctAnswer = false;
 
-                if (variants[ans].IsTrue)
+                while (!correctAnswer)
                 {
-                    score++;
+                    try
+                    {
+                        byte ans = Convert.ToByte(Console.ReadLine());
+
+                        if (ans >= 0 && ans < variants.Length)
+                        {
+                            correctAnswer = true;
+
+                            if (variants[ans].IsTrue)
+                            {
+                                score++;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Invalid answer. Enter number between 0 and {variants.Length-1}:");
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"Invalid answer. Enter number between 0 and {variants.Length-1}:");
+                    }
+
                 }
 
                 Console.WriteLine();

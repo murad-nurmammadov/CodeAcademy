@@ -22,13 +22,13 @@ namespace CodeAcademy
             Question[] questions =
             {
                 new Question("Text of question 1", [new Variant("variant1.1", true), 
-                                                    new Variant("variant1.2", false),
-                                                    new Variant("variant1.3", false)]),
-                new Question("Text of question 2", [new Variant("variant2.1", false),
+                                                    new Variant("variant1.2"),
+                                                    new Variant("variant1.3")]),
+                new Question("Text of question 2", [new Variant("variant2.1"),
                                                     new Variant("variant2.2", true),
-                                                    new Variant("variant2.3", false)]),
-                new Question("Text of question 3", [new Variant("variant3.1", false),
-                                                    new Variant("variant3.2", false),
+                                                    new Variant("variant2.3")]),
+                new Question("Text of question 3", [new Variant("variant3.1"),
+                                                    new Variant("variant3.2"),
                                                     new Variant("variant3.3", true)])
             };
 

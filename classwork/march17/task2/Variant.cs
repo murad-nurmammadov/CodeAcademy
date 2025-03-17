@@ -5,7 +5,7 @@
         public string Text;
         public bool IsTrue;
 
-        public Variant(string variantText, bool isTrue)
+        public Variant(string variantText, bool isTrue=false)
         {
             Text = variantText;
             IsTrue = isTrue;
