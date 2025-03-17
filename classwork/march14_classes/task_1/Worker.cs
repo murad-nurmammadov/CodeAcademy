@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodeAcademy.classwork.march14_classes.task_1
+﻿namespace CodeAcademy.classwork.march14_classes.task_1
 {
     internal class Worker
     {
