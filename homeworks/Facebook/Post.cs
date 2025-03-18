@@ -1,4 +1,4 @@
-﻿namespace CodeAcademy.homeworks.march18.Facebook
+﻿namespace CodeAcademy.homeworks.Facebook
 {
     class Post
     {

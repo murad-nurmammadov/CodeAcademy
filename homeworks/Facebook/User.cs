@@ -1,10 +1,10 @@
-﻿namespace CodeAcademy.homeworks.march18.Facebook
+﻿namespace CodeAcademy.homeworks.Facebook
 {
     class User
     {
 
         // User classı olsun. (Name, Surname, Email, DateOfBirth, isSingle ect.)
-        
+
         // Fields
         public string Name;
         public string Surname;
@@ -56,7 +56,7 @@
 
             modifiedPosts[^1] = post;
 
-            Posts  = modifiedPosts;
+            Posts = modifiedPosts;
         }
 
 
