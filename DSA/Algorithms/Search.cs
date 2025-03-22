@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-
-namespace CodeAcademy
+﻿namespace CodeAcademy.DSA.Algorithms
 {
-    internal class SearchingAlgorithms
+    public static class Search
     {
         // NOT-1: Interpolation ~5 sətir ChatGPT-dən götürdüm.
         // NOT-2: Fibonacci-nin kodu yaman çox trial-error oldu...
         // NOT-3: Binary bir sual var.
 
-        #region Searching Algorithms
-        int LinearSearch(int[] array, int start, int end, int searchedElement)
+        public static int Linear(int[] array, int start, int end, int searchedElement)
         {
             for (int i = start; i < end; i++)
             {
@@ -26,7 +17,7 @@ namespace CodeAcademy
         }
 
         // TODO: Why right taken out of range?
-        int BinarySearch(int[] array, int left, int right, int searchedElement)
+        public static int Binary(int[] array, int left, int right, int searchedElement)
         {
             // TODO: Set as Default
             //int left = 0;
@@ -44,7 +35,7 @@ namespace CodeAcademy
             return -1;
         }
 
-        int TernarySearch(int[] array, int searchedElement)
+        public static int Ternary(int[] array, int searchedElement)
         {
             int left = 0;
             int right = array.Length - 1;
@@ -68,7 +59,7 @@ namespace CodeAcademy
             return -1;
         }
 
-        int JumpSearch(int[] array, int searchedElement, int jumpSize)
+        public static int Jump(int[] array, int searchedElement, int jumpSize)
         {
             // Uses Linear Search after constraining the range.
 
@@ -78,15 +69,15 @@ namespace CodeAcademy
             {
                 if (array[pivot + jumpSize] > searchedElement)
                 {
-                    return LinearSearch(array, pivot, pivot + jumpSize, searchedElement);
+                    return Linear(array, pivot, pivot + jumpSize, searchedElement);
                 }
                 else { pivot += jumpSize; }
             }
 
-            return LinearSearch(array, pivot, array.Length, searchedElement);
+            return Linear(array, pivot, array.Length, searchedElement);
         }
 
-        int ExponentialSearch(int[] array, int searchedElement)
+        public static int Exponential(int[] array, int searchedElement)
         {
             // Uses binary search after constraining the range.
             // Similar to Jump Search.
@@ -100,15 +91,15 @@ namespace CodeAcademy
             {
                 if (array[pivot * 2] > searchedElement)
                 {
-                    return BinarySearch(array, pivot, pivot * 2, searchedElement);
+                    return Binary(array, pivot, pivot * 2, searchedElement);
                 }
                 else { pivot *= 2; }
             }
 
-            return BinarySearch(array, pivot, array.Length, searchedElement);
+            return Binary(array, pivot, array.Length, searchedElement);
         }
 
-        int InterpolationSearch(int[] array, int searchedElement)
+        public static int Interpolation(int[] array, int searchedElement)
         {
             // Conditions: Array needs to be (1) (at least almost) uniformly distributed and (2) sorted.
 
@@ -153,7 +144,7 @@ namespace CodeAcademy
         }
 
         #region Fibonacci Search
-        int CountFibonacciNumbers(int endNum)
+        public static int CountFibonacciNumbers(int endNum)
         {
             // pivots;
             int fib1 = 1;  // Start with 1, 2 instead of 0, 1.
@@ -174,7 +165,7 @@ namespace CodeAcademy
             return size;
         }
 
-        int[] FibonacciSequence(int num)
+        public static int[] FibonacciSequence(int num)
         {
             int size = CountFibonacciNumbers(num) - 1;  // -1 because we need up to fib1, not fib2
 
@@ -191,7 +182,7 @@ namespace CodeAcademy
             return fibSeq;
         }
 
-        int FibonacciSearch(int[] array, int searchedElement)
+        public static int Fibonacci(int[] array, int searchedElement)
         {
             int[] fibSeq = FibonacciSequence(array.Length);
             int pivot = fibSeq.Length - 2;
@@ -220,9 +211,6 @@ namespace CodeAcademy
         }
 
         #endregion
-
-        #endregion
-
 
 
         // TODO: Write testing function
