@@ -3,9 +3,10 @@
     public static class Sort
     {
 
-        // TODO: Implement sorting algorithms and write test functions for each of them.
+        // TODO: Implement Insertion, Merge, and Quick sorting algorithms
+        
         // ChatGPT Suggestions:
-        // 1. (haven't implemented yet) We can assume array isSorted unless any changes happen in Bubble, Cocktail, Comb
+        // 1. We can assume array isSorted unless any changes happen in Bubble, Cocktail, Comb
         
         static void Swap(ref int[] array, int index1, int index2)
         {
@@ -79,6 +80,10 @@
         #region Insertion Sort
         public static int[] Insertion(int[] array)
         {
+            for (int i = 1; i < array.Length; i ++)
+            {
+
+            }
 
             return array;
         }
@@ -140,6 +145,9 @@
         #endregion
 
         #region Comb Sort
+        /// <summary>
+        /// Bubble sort with varying distances between compared elements (from high to low)
+        /// </summary>
         public static int[] Comb(int[] array)
         {
             int margin = array.Length - 1;
