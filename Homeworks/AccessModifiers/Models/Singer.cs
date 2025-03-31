@@ -7,20 +7,30 @@
         Name və Surname max 100 uzunluqda set oluna bilər. Age max 170 ola bilər.
         */
 
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public byte Age { get; set; }
+        private string _name;
+        private string _surname;
+        private byte _age;
+
+        public string Name
+        {
+            get { return _name; }
+            set { if (value.Length <= 100) { _name = value; } }
+        }
+
+        public string Surname
+        {
+            get { return _surname; }
+            set { if (value.Length <= 100) { _surname = value; } }
+        }
+
+        public byte Age
+        {
+            get { return _age; }
+            set { if (value <= 170) { _age = value; } }
+        }
 
         public Singer(string name, string surname, byte age)
         {
-            if (name.Length > 100 || surname.Length > 100)
-            {
-                throw new Exception("Singer's name or surname length cannot exceed 100.");
-            }
-            if (age > 170)
-            {
-                throw new Exception("Age cannot exceed 170");
-            }
             Name = name;
             Surname = surname;
             Age = age;

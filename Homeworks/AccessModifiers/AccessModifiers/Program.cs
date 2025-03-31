@@ -6,19 +6,21 @@ namespace AccessModifiers
     {
         static void Main(string[] args)
         {
-            /*
-            Song class-ı olsun. Song-un Name, Genre, Singer(agregation) prop-ları olsun. 
-            Name max 100 uzunluqda set oluna bilər. Genre yalnız "Pop", "Rock", "Jazz", 
-            "Techno" bu value-lardan biri ola bilər. Məsələn  "Classic" ola bilməz, yalnız 
-            göstərilənlərdən biri set olunmalıdır.
+            Singer singer1 = new Singer("Name_1", "Surname_1", 32);
+            Singer singer2 = new Singer("Name_2", "Surname_2", 27);
 
-            Song-un rating-ləri olsun. AddRating, GetAverageRating metodları ilə 
-            funksionallıq təmin olunsun.
-            */
+            //Console.WriteLine($"{singer1.Name} {singer1.Surname}, {singer1.Age}");
+            
+            Song song = new Song("Song", "Pop", [singer1, singer2]);
 
-            Singer singer1 = new Singer("Bruno", "Mars", 39);
+            song.AddRating(5);
+            song.AddRating(13);
+            song.AddRating(8);
+            song.AddRating(9);
+            song.AddRating(7);
+            song.AddRating(8);
 
-            Console.WriteLine($"{singer1.Name} {singer1.Surname}");
+            Console.WriteLine(song.GetAvgRating());
         }
     }
 }
