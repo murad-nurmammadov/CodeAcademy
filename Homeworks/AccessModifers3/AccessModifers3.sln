@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessModifers3", "AccessModifers3\AccessModifers3.csproj", "{2D19DE97-FB5E-4786-BBB3-3C4AD6E8A379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{F1DCE335-719A-46FC-B1AC-11C4AEE619BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D19DE97-FB5E-4786-BBB3-3C4AD6E8A379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D19DE97-FB5E-4786-BBB3-3C4AD6E8A379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D19DE97-FB5E-4786-BBB3-3C4AD6E8A379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D19DE97-FB5E-4786-BBB3-3C4AD6E8A379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DCE335-719A-46FC-B1AC-11C4AEE619BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DCE335-719A-46FC-B1AC-11C4AEE619BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DCE335-719A-46FC-B1AC-11C4AEE619BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DCE335-719A-46FC-B1AC-11C4AEE619BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F651BC79-37B3-4213-8C31-66F59EC07678}
+	EndGlobalSection
+EndGlobal
