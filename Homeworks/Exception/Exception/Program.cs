@@ -1,4 +1,6 @@
-﻿namespace HWException
+﻿using HWException.Models;
+
+namespace HWException
 {
     internal class Program
     {
@@ -18,7 +20,15 @@
             - her sey okaydirse meeting obyekti yaradib meeting listine add edir
             */
 
-            Console.WriteLine("Hello, World!");
+            Meeting meeting1 = new Meeting("Murad N", DateTime.Parse("5/25/2025"), DateTime.Parse("5/27/2025"));
+            
+            MeetingSchedule meetingSchedule = new MeetingSchedule([meeting1]);
+
+            meetingSchedule.SetMeeting("Davud N", DateTime.Parse("5/26/2025"), DateTime.Parse("5/28/2025"));
+            meetingSchedule.SetMeeting("Davud N", DateTime.Parse("5/29/2025"), DateTime.Parse("5/28/2025"));
+            meetingSchedule.SetMeeting("Said N", DateTime.Parse("5/29/2025"), DateTime.Parse("5/29/2025"));
+            meetingSchedule.SetMeeting("Said N", DateTime.Parse("5/29/2025"), DateTime.Parse("5/30/2025"));
+            meetingSchedule.SetMeeting("Said N", DateTime.Parse("6/1/2025"), DateTime.Parse("6/2/2025"));
         }
     }
 }

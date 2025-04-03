@@ -4,29 +4,64 @@ namespace HWException.Models
 {
     public class MeetingSchedule
     {
-        public Meeting[] Meetings { get; set; }
+        // Fields
+        private Meeting[] _meetings;
+        
+        // Methods
+        public Meeting[] Meetings { get => _meetings; set => _meetings = value; }
 
+        // Constructors
+        public MeetingSchedule(Meeting[] meetings)
+        {
+            Meetings = meetings;
+        }
+
+        // Methods
         public void SetMeeting(string fullName, DateTime fromDate, DateTime toDate)
         {
-            Meeting newMeeeting = new Meeting(fullName, fromDate, toDate);
+            Meeting plannedMeeeting = new Meeting(fullName, fromDate, toDate);
 
-            if (fromDate >= toDate)
+            try
             {
-                //Array.Sort();
-                foreach(Meeting meeting in Meetings)
+                // Checks if the start or the end of the planned meeting coincides with another meeting
+                foreach (Meeting meeting in Meetings)
                 {
-                    
+                    if ((meeting.FromDate <= plannedMeeeting.FromDate
+                        && plannedMeeeting.FromDate <= meeting.ToDate)
+                        ||
+                        (meeting.FromDate <= plannedMeeeting.ToDate
+                        && plannedMeeeting.ToDate <= meeting.ToDate))
+                    {
+                        throw new ReservedDateIntervalException("Coincides with another meeting!");
+                    }
                 }
 
-                throw new ReservedDateIntervalException("");
+                // Check if end is before start or if they coincde
+                if (fromDate > toDate)
+                {
+                    throw new WrongDateIntervalException("Meeting cannot end before it starts!");
+                }
+                else if (fromDate == toDate)
+                {
+                    throw new WrongDateIntervalException("Start and end cannot coincide!.");
+                }
+
+
+                // Add meeting
+                else
+                {
+                    Array.Resize(ref _meetings, Meetings.Length + 1);
+                    _meetings[^1] = plannedMeeeting;
+                    Console.WriteLine($"Meeting with {fullName} from {fromDate} to {toDate} is added!");
+                }
             }
-            else if (fromDate >= toDate)
+            catch (ReservedDateIntervalException e)
             {
-                throw new WrongDateIntervalException("");
+                Console.WriteLine(e.Message);
             }
-            else
+            catch (WrongDateIntervalException e)
             {
-                //Array.Resize(ref Meetings, Meetings.Length + 1);
+                Console.WriteLine(e.Message);
             }
         }
     }
