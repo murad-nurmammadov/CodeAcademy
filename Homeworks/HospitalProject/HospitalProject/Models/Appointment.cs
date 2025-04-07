@@ -62,11 +62,11 @@ namespace HospitalProject.Models
         // Constructor
         public Appointment(string doctor, string patient, DateTime startDate, DateTime endDate)
         {
+            No = ++_no;
             Doctor = doctor;
             Patient = patient;
             StartDate = startDate;
             EndDate = endDate;
-            No = ++_no;
         }
 
         // Methods

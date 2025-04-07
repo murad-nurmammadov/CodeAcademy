@@ -96,8 +96,7 @@ namespace HospitalProject
                         {
                             foreach (Appointment appointment in hospital.Appointments)
                             {
-                                if ((DateTime.Now < appointment.EndDate)
-                                && (appointment.StartDate != appointment.EndDate))
+                                if (DateTime.Now < appointment.EndDate && !appointment.IsCancelled)
                                     Console.WriteLine(appointment);
                             }
                             break;
