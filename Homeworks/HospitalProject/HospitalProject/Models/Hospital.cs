@@ -2,6 +2,8 @@
 
 namespace HospitalProject.Models
 {
+    // TODO: Hospital class – GetWeeklyAppointments()
+
     /*
     Hospital class
      - Appointments
@@ -19,7 +21,7 @@ namespace HospitalProject.Models
     internal class Hospital
     {
         // Fields
-        private Appointment[] _appointments;
+        private Appointment[] _appointments = [];
 
         // Properties
         public Appointment[] Appointments

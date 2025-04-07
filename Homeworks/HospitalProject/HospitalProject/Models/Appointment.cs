@@ -32,16 +32,18 @@ namespace HospitalProject.Models
             get => _endDate;
             set
             {
-                if (value < _startDate) throw new EndBeforeStartException();
+                if (value < _startDate) 
+                    throw new EndBeforeStartException();
+                _endDate = value;
             }
         }
 
         // Constructor
-        public Appointment(string patient, string doctor, DateTime startDate, DateTime endDate)
+        public Appointment(string doctor, string patient, DateTime startDate, DateTime endDate)
         {
             No = ++_no;
-            Patient = patient;
             Doctor = doctor;
+            Patient = patient;
             StartDate = startDate;
             EndDate = endDate;
         }
