@@ -64,8 +64,8 @@ namespace HospitalProject.Models
                     {
                         appointment.EndDate = DateTime.Now;
                     }
-                    // Otherwise, equalize start and end dates.
-                    else appointment.EndDate = appointment.StartDate;
+                    // Otherwise, equalize cancel appointment.
+                    else appointment.IsCancelled = true;
 
                     return;
                 }
@@ -107,7 +107,7 @@ namespace HospitalProject.Models
         {
             foreach (Appointment appointment in Appointments)
             {
-                if (appointment.StartDate.Date == DateTime.Now.Date)
+                if (appointment.StartDate.Date == DateTime.Now.Date && !appointment.IsCancelled)
                 {
                     Console.WriteLine(appointment);
                 }
@@ -118,8 +118,7 @@ namespace HospitalProject.Models
         {
             foreach (Appointment appointment in Appointments)
             {
-                if ((appointment.StartDate <= DateTime.Now)
-                    && (DateTime.Now < appointment.EndDate))
+                if (appointment.StartDate <= DateTime.Now && DateTime.Now < appointment.EndDate && !appointment.IsCancelled)
                 {
                     Console.WriteLine(appointment);
                 }

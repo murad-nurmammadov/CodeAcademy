@@ -15,13 +15,33 @@ namespace HospitalProject.Models
     {
         // Fields
         private static int _no = 0;
+        private string _doctor;
+        private string _patient;
         private DateTime _startDate;
         private DateTime _endDate;
 
         // Properties
         public int No { get; }
-        public string Doctor { get; set; }
-        public string Patient { get; set; }
+        public string Doctor
+        {
+            get => _doctor;
+            set
+            {
+                if (value == "")
+                    throw new ArgumentException("Doctor's name cannot be empty!");
+                _doctor = value;
+            }
+        }
+        public string Patient
+        {
+            get => _patient;
+            set
+            {
+                if (value == "")
+                    throw new ArgumentException("Patient's name cannot be empty!");
+                _patient = value;
+            }
+        }
         public DateTime StartDate
         {
             get => _startDate;
@@ -32,26 +52,28 @@ namespace HospitalProject.Models
             get => _endDate;
             set
             {
-                if (value < _startDate) 
+                if (value < _startDate)
                     throw new EndBeforeStartException();
                 _endDate = value;
             }
         }
+        public bool IsCancelled { get; set; } = false;
 
         // Constructor
         public Appointment(string doctor, string patient, DateTime startDate, DateTime endDate)
         {
-            No = ++_no;
             Doctor = doctor;
             Patient = patient;
             StartDate = startDate;
             EndDate = endDate;
+            No = ++_no;
         }
 
         // Methods
         public override string ToString()
         {
-            return $"{No}: Dr {Doctor} with {Patient} | from {StartDate} to {EndDate}";
+            string text = $"{No}: Dr {Doctor} with {Patient} | from {StartDate} to {EndDate}";
+            return IsCancelled ? text + " | CANCELLED" : text;
         }
     }
 }

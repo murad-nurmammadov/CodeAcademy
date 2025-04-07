@@ -24,7 +24,7 @@ namespace HospitalProject
             hospital.AddAppointment(new Appointment("Murad",
                                         "Davud",
                                         DateTime.Now,
-                                        Convert.ToDateTime("04.08.2025 02:15:00")));
+                                        Convert.ToDateTime("04.08.2025 06:15:00")));
 
             hospital.AddAppointment(new Appointment("Murad",
                                                     "Davud",
@@ -72,6 +72,7 @@ namespace HospitalProject
                                 Appointment newAppointment = new Appointment(doctor, patient, startDate, endDate);
                                 hospital.AddAppointment(newAppointment);
                             }
+                            catch (ArgumentException ex) { Console.WriteLine(ex.Message); }
                             catch (FormatException) { Console.WriteLine("Incorrect datetime format!"); }
                             catch (AppointmentOverlapException ex) { Console.WriteLine(ex.Message); }
                             break;
