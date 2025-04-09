@@ -1,0 +1,188 @@
+using System.ComponentModel.Design;
+using QuizApp.Models;
+
+namespace QuizApp
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            /*
+            1. Create new quiz
+            2. Solve a quiz
+            3. Show quizzes
+            */
+
+            #region Sample Quizzes
+            List<Quiz> Quizzes = [];
+
+            Variant var1 = new Variant("var 1", true);
+            Variant var2 = new Variant("var 2", false);
+            Variant var3 = new Variant("var 3", false);
+            Variant var4 = new Variant("var 4", false);
+
+            List<Variant> vars = [var1, var2, var3];
+
+            Question qn1 = new Question("text 1", vars);
+            Question qn2 = new Question("text 2", vars);
+            Question qn3 = new Question("text 3", vars);
+
+            List<Question> qns = [qn1, qn2, qn3];
+
+            Quiz quiz1 = new Quiz("Quiz 1", qns);
+            Quiz quiz2 = new Quiz("Quiz 2", qns);
+
+            Quizzes.AddRange([quiz1, quiz2]);
+            #endregion
+
+
+            string shortcut = "";
+
+            Console.Clear();
+            while (shortcut != "0")
+            {
+                Console.WriteLine("====================");
+                Console.WriteLine("MENU");
+                Console.WriteLine("0. Quit");
+                Console.WriteLine("1. Create Quiz");
+                Console.WriteLine("2. Solve a Quiz");
+                Console.WriteLine("3. Show Quizzes");
+                Console.WriteLine("====================");
+                Console.WriteLine("Enter shortcut:");
+
+                shortcut = Console.ReadLine();
+                Console.Clear();
+
+                switch (shortcut)
+                {
+                    case "0": return;
+                    case "1": { CreateQuiz(Quizzes); break; }
+                    case "2": { TakeQuiz(Quizzes); break; }
+                    case "3": { ShowQuizzes(Quizzes); break; }
+                    default: { Console.WriteLine("Invalid shortcut! Try again..."); break; }
+                }
+            }
+        }
+
+        #region Create Quiz
+        static private void CreateQuiz(List<Quiz> quizzes)
+        {
+            // Quiz name
+            Console.WriteLine("Enter quiz name:");
+            string quizName = Console.ReadLine();
+
+            // Questions
+            Console.WriteLine("Enter number of questions:");
+            uint count = uint.Parse(Console.ReadLine());
+
+            List<Question> questions = new List<Question>();
+
+            for (int i = 0; i < count; i++)
+            {
+                Question newQuestion = _createQuestion();
+                questions.Add(newQuestion);
+                Console.Clear();
+            }
+
+            Quiz quiz = new Quiz(quizName, questions);
+            quizzes.Add(quiz);
+        }
+        static private Question _createQuestion()
+        {
+            Console.WriteLine("Enter question text:");
+            string questionText = Console.ReadLine();
+
+            List<Variant> variants = _createVariants();
+
+            return new Question(questionText, variants);
+        }
+        static private List<Variant> _createVariants()
+        {
+            List<Variant> variants = [];
+
+            Console.WriteLine("ENTER CORRECT VARIANT:");
+            string varText = Console.ReadLine();
+            variants.Add(new Variant(varText, true));
+
+            for (int i = 1; i < 4; i++)
+            {
+                Console.WriteLine($"Enter incorrect variant {i}:");
+                varText = Console.ReadLine();
+                variants.Add(new Variant(varText, false));
+            }
+            return variants;
+        }
+        #endregion
+
+        #region Take Quiz
+        static private void TakeQuiz(List<Quiz> quizzes)
+        {
+            while (true)
+            {
+                Console.WriteLine("========================");
+                Console.WriteLine("Available Quizes:");
+                ShowQuizzes(quizzes);
+                Console.WriteLine("========================");
+                Console.WriteLine("Enter quiz id:");
+
+                // Validate ID:
+                if (!byte.TryParse(Console.ReadLine(), out byte quizId))
+                {
+                    Console.WriteLine("ID needs to be positive integer! Try again...");
+                }
+                foreach(Quiz quiz in  quizzes)
+                {
+                    if (quiz.Id == quizId)
+                    {
+                        //goto select_quiz;
+                    }
+                }
+
+            select_quiz:
+                // Select Quiz
+                Quiz quiz = quizzes[quizId];
+                Console.Clear();
+
+                byte countCorrect = 0;
+
+                // Ask Questions
+                Question[] qns = [.. quiz.Questions];
+                Variant[] vars;
+
+                for (int i = 0; i < qns.Length; i++)
+                {
+                    vars = [.. qns[i].Variants];
+
+                    Console.WriteLine("++++++++++++++++++++++");
+                    Console.WriteLine($"Question {i+1}: {qns[i].Text}");
+                    for (int j = 0; j < vars.Length; j++)
+                    {
+                        Console.WriteLine($"{j + 1} -> {vars[j].Text}");
+                    }
+                    Console.WriteLine("++++++++++++++++++++++");
+
+                    Console.WriteLine("Enter correct id:");
+                    byte chosenId = byte.Parse(Console.ReadLine());
+
+                    if (chosenId == 1) countCorrect++;
+                    Console.Clear();
+                }
+
+                // Print number of corrects
+                Console.WriteLine($"{countCorrect} corrects out of {quiz.Questions.Count}");
+
+                break;
+            }
+        }
+        #endregion
+
+
+        static void ShowQuizzes(List<Quiz> quizzes)
+        {
+            foreach (var quiz in quizzes)
+            {
+                Console.WriteLine(quiz);
+            }
+        }
+    }
+}

@@ -2,20 +2,22 @@
 {
     internal class Variant
     {
-        // Fields
-        public string _variantText;
-        
         // Properties
-        public string VariantText
-        {
-            get => _variantText;
-            set => _variantText = value;
-        }
+        public int Id { get; init; }
+        public string Text { get; set; }
+        public bool IsCorrect { get; set; }
 
         // Constructor
-        public Variant(string text)
+        public Variant(int id, string text, bool isCorrect = false)
         {
-            _variantText = text;
+            Id = id;
+            Text = text;
+            IsCorrect = isCorrect;
+        }
+
+        public override string ToString()
+        {
+            return $"{Id}. {Text}";
         }
     }
 }

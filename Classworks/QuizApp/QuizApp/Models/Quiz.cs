@@ -4,14 +4,19 @@
     {
         // Fields
         private static byte _id = 0;
+        private string _name;
 
         // Properties
-        public byte Id
+        public int Id { get; init; }
+        public string Name
         {
-            get => _id;
-            set => _id = value;
+            get => _name;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value)) _name = "New Quiz";
+                else _name = value;
+            }
         }
-        public string Name { get; set; } = "New Quiz";
         public List<Question> Questions { get; set; }
 
         // Constructor
@@ -20,6 +25,20 @@
             Id = ++_id;
             Name = name;
             Questions = questions;
+        }
+
+        // Methods
+        public void ShowQuestions()
+        {
+            foreach (Question question in Questions)
+            {
+                Console.WriteLine(question);
+            }
+        }
+        
+        public override string ToString()
+        {
+            return $"{Id}. {Name} | {Questions.Count} questions";
         }
     }
 }
