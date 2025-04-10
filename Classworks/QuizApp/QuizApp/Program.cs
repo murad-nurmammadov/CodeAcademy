@@ -23,9 +23,9 @@ namespace QuizApp
                 0 -> Quit
                 1 -> Create a Quiz
                 2 -> Show Quizzes
-                3 -> Edit Quizzes
-                4 -> Remove Quiz
-                5 -> Take a Quiz
+                3 -> Take a Quiz
+                4 -> Edit Quizzes
+                5 -> Remove Quiz
                 =======================
                 """;
             string editQuizMenu = """
@@ -71,7 +71,7 @@ namespace QuizApp
                 Console.WriteLine(mainMenu);
                 Console.WriteLine("Enter shortcut:");
                 shortcut = Console.ReadLine();
-                Console.Clear();
+                //Console.Clear();
 
                 switch (shortcut)
                 {
@@ -106,11 +106,11 @@ namespace QuizApp
             // Take Quiz Name
             Console.WriteLine("Enter quiz name:");
             string quizName = Console.ReadLine();
-            Console.Clear();
+        //Console.Clear();
 
         checkpoint_1:
             // Take Count of Questions
-            Console.Write("Enter number of questions:");
+            Console.WriteLine("Enter number of questions:");
             if (!int.TryParse(Console.ReadLine(), out int count))
             {
                 Console.Clear();
@@ -130,13 +130,13 @@ namespace QuizApp
 
                 if (string.IsNullOrWhiteSpace(questionText))
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Console.WriteLine("Question cannot be left empty! Try again...");
                     Console.WriteLine("===========================================");
                     goto checkpoint_2;
                 }
 
-                Console.WriteLine("Attention: First variant is asummed to be correct by default!\n");
+                Console.WriteLine("Attention: First variant is asummed to be correct by default!");
 
                 // Take variants
                 List<Variant> variantList = [];
@@ -147,7 +147,7 @@ namespace QuizApp
                     string variantText = Console.ReadLine();
                     if (string.IsNullOrWhiteSpace(variantText))
                     {
-                        Console.Clear();
+                        //Console.Clear();
                         Console.WriteLine("Variant cannot be left empty! Try again...");
                         Console.WriteLine("==========================================");
                         goto checkpoint_3;
@@ -158,10 +158,10 @@ namespace QuizApp
                 variantList[0].IsCorrect = true;
 
                 questionList.Add(new Question(i + 1, questionText, variantList));
-                Console.Clear();
+                //Console.Clear();
             }
 
-            Console.Clear();
+            //Console.Clear();
             return new Quiz(quizName, questionList);
         }
 
@@ -183,16 +183,19 @@ namespace QuizApp
             foreach (Question question in quiz.Questions)
             {
                 question.Print();
-                Console.WriteLine("\nEnter correct variant id:");
 
-            checkpoint:  // TODO: Finish
-                if (!int.TryParse(Console.ReadLine(), out int chosenId))
+            checkpoint:
+                Console.WriteLine("\nEnter correct variant id:");
+                if (!int.TryParse(Console.ReadLine(), out int chosenId)
+                    || chosenId <= 0
+                    || chosenId > question.Variants.Count)
                 {
                     Console.WriteLine("InvalidID! Try again...");
                     goto checkpoint;
                 }
 
-                if (chosenId == 0) countCorrect++;
+                int correctId = question.Variants.Find(x => x.IsCorrect).Id;
+                if (correctId == chosenId) countCorrect++;
             }
 
             Console.WriteLine($"{countCorrect} correct out of {quiz.Questions.Count}");
