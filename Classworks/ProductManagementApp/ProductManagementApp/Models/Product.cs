@@ -18,7 +18,7 @@
         // Methods
         public override string ToString()
         {
-            return $"{Id}. {Name} | {Price} USD";
+            return $"{Name} | {Price} USD";
         }
     }
 }

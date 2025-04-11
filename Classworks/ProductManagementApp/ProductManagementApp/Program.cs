@@ -22,7 +22,7 @@ namespace ProductManagementApp
             productManager.GetAll();
             Console.WriteLine();
 
-            productManager.Update(2, product4);
+            productManager.Update(221, product4);
             productManager.GetAll();
             Console.WriteLine();
 
