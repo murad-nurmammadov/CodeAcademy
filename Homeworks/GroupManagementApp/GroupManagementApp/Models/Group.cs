@@ -15,10 +15,9 @@
 
         public Group(string name)
         {
+            string path = Path.Combine("..", "..", "..", "JSONs", $"{name}.json");
             Name = name;
             Students = _students;
-
-            string path = Path.Combine("..", "..", "..", "JSONs", $"{name}.json");
         }
 
         public void AddStudent(Student student) { }
