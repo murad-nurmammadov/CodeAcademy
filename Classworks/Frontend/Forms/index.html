@@ -16,25 +16,33 @@
     <div class="card">
         <h1>Sign Up</h1>
 
-        <form action="">
+        <form action="" id="signup-form">
             <div class="input-wrapper">
-                <input required type="text" id="sign-up username" placeholder="Username">
+                <input required type="text" id="signup-username" placeholder="Username">
                 <img src="./src/user-svgrepo-com.svg" alt="user icon" width="20px">
             </div>
 
             <div class="input-wrapper">
-                <input required type="text" id="sign-up email" placeholder="Email">
+                <input required type="text" id="signup-email" placeholder="Email">
                 <img src="./src/email-svgrepo-com.svg" alt="email icon" width="20px">
             </div>
             
             <div class="input-wrapper">
-                <input required type="password" id="sign-up password" placeholder="Password">
+                <input required type="password" id="signup-password" placeholder="Password">
                 <img src="./src/password-check-svgrepo-com.svg" alt="email icon" width="20px">
             </div>
-        </form>
 
-        <button>Sign Up</button>
+            <div class="input-wrapper">
+                <input required type="password" id="signup-confirm-password" placeholder="Confirm password">
+                <img src="./src/password-check-svgrepo-com.svg" alt="email icon" width="20px">
+            </div>
+
+            <p class="error-msg" id="signup-error-message"></p>
+
+            <button type="submit">Sign Up</button>
+        </form>
     </div>
+
     <p>Welcome!</p>
 
     <br>
@@ -42,24 +50,25 @@
     <div class="card">
         <h1>Log In</h1>
 
-        <form action="">
+        <form action="" id="login-form">
             <div class="input-wrapper">
-                <input required type="text" id="sign-up username" placeholder="Username or Email">
+                <input required type="text" id="login-account" placeholder="Username or Email">
                 <img src="./src/user-svgrepo-com.svg" alt="user icon" width="20px">
             </div>
 
             <div class="input-wrapper">
-                <input required type="password" id="sign-up password" placeholder="Password">
+                <input required type="password" id="login-password" placeholder="Password">
                 <img src="./src/password-check-svgrepo-com.svg" alt="user icon" width="20px">
             </div>
 
-        </form>
+            <p class="error-msg" id="login-error-message"></p>
 
-        <button>Log In</button>
+            <button type="submit">Log In</button>
+        </form>
     </div>
 
     <p>Welcome!</p>
 
-    <script src="./main.js"></script>
+    <script src="./main.js" type=module></script>
 </body>
 </html>
