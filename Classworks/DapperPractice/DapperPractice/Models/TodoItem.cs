@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DapperPractice.Models;
 
-namespace DapperPractice.Models
+internal class TodoItem
 {
-    internal class TodoItem
-    {
-    }
+    public int Id { get; init; }
+    public string Title { get; set; }
+    public bool IsCompleted { get; set; }
+
+    public TodoItem(int id, string title, bool isCompleted) { }
 }
