@@ -5,7 +5,7 @@ namespace DapperPracticeApp;
 
 internal class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         /*
         Product və Category idarəetmə sistemi TƏLƏBLƏR: 
@@ -42,25 +42,25 @@ internal class Program
 
         #region Categories
         GenericRepository<Category> catRepo = new("Categories");
-        catRepo.GetAll().ForEach(c => Console.WriteLine(c));
+        (await catRepo.GetAllAsync()).ForEach(c => Console.WriteLine(c));
         Console.WriteLine("=====================");
 
-        catRepo.Add(new Category(0, "cat-1"));
-        catRepo.Add(new Category(0, "cat-2"));
-        catRepo.Add(new Category(0, "cat-1"));
-        catRepo.Add(new Category(0, "cat-2"));
-        catRepo.Add(new Category(0, "cat-2"));
+        await catRepo.AddAsync(new Category(0, "cat-1"));
+        await catRepo.AddAsync(new Category(0, "cat-2"));
+        await catRepo.AddAsync(new Category(0, "cat-1"));
+        await catRepo.AddAsync(new Category(0, "cat-2"));
+        await catRepo.AddAsync(new Category(0, "cat-2"));
 
 
-        catRepo.Update(new Category(1, "updated-cat-1"));
+        await catRepo.UpdateAsync(new Category(1, "updated-cat-1"));
 
-        Console.WriteLine(catRepo.GetById(2));
+        Console.WriteLine(await catRepo.GetByIdAsync(2));
         //Console.WriteLine(catRepo.GetById(200));  // Not found exception
 
         //catRepo.Delete(new Category(5, "..."));
 
         Console.WriteLine("=====================");
-        catRepo.GetAll().ForEach(c => Console.WriteLine(c));
+        (await catRepo.GetAllAsync()).ForEach(c => Console.WriteLine(c));
         #endregion
 
         Console.WriteLine();
@@ -71,21 +71,21 @@ internal class Program
 
         #region Products
         GenericRepository<Product> productRepo = new();
-        //productRepo.GetAll().ForEach(c => Console.WriteLine(c));
-        //Console.WriteLine("=====================");
+        (await productRepo.GetAllAsync()).ForEach(c => Console.WriteLine(c));
+        Console.WriteLine("=====================");
 
-        //productRepo.Add(new Product(0, "prod-1", 20, 1));
-        //productRepo.Add(new Product(0, "prod-2", 20, 2));
+        await productRepo.AddAsync(new Product(0, "prod-1", 20, 1));
+        await productRepo.AddAsync(new Product(0, "prod-2", 20, 2));
 
-        //productRepo.Update(new Product(1, "updated-prod-1", 20, 2));
+        await productRepo.UpdateAsync(new Product(1, "updated-prod-1", 20, 2));
 
-        //Console.WriteLine(productRepo.GetById(2));
-        ////Console.WriteLine(catRepo.GetById(200));  // Not found exception
+        Console.WriteLine(await productRepo.GetByIdAsync(2));
+        //Console.WriteLine(catRepo.GetById(200));  // Not found exception
 
-        ////productRepo.Delete(new Product(2, "...", 20, 1));
+        //productRepo.Delete(new Product(2, "...", 20, 1));
 
-        //Console.WriteLine("=====================");
-        //productRepo.GetAll().ForEach(p => Console.WriteLine(p));
+        Console.WriteLine("=====================");
+        (await productRepo.GetAllAsync()).ForEach(p => Console.WriteLine(p));
         #endregion
     }
 }

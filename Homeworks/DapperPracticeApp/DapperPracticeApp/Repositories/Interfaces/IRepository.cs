@@ -2,9 +2,9 @@
 
 internal interface IRepository<T>
 {
-    public int Add(T item);
-    public int Update(T item);
-    public int Delete(T item);
-    public T GetById(int id);
-    public List<T> GetAll();
+    public Task<int> AddAsync(T item);
+    public Task<int> UpdateAsync(T item);
+    public Task<int> DeleteAsync(T item);
+    public Task<T> GetByIdAsync(int id);
+    public Task<List<T>> GetAllAsync();
 }

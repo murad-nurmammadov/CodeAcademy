@@ -31,57 +31,55 @@ internal class GenericRepository<T> : IRepository<T>
     }
 
     // Methods
-    public int Add(T item)
+    public async Task<int> AddAsync(T item)
     {
         using (SqlConnection conn = new(_connString))
         {
             string _ = string.Join(",", _propertyNames.Where(name => name != "Id").Select(name => $"@{name}"));
             string sql = $"INSERT INTO {_tableName} VALUES ({_})";
             
-            return conn.Execute(sql, item);  // rows affected
+            return await conn.ExecuteAsync(sql, item);  // rows affected
         }
     }
 
-    public int Update(T item)
+    public async Task<int> UpdateAsync(T item)
     {
         using (SqlConnection conn = new(_connString))
         {
             string _ = string.Join(",", _propertyNames.Where(name => name != "Id").Select(name => $"{name}=@{name}"));
             string sql = $"UPDATE {_tableName} SET {_} WHERE Id=@Id";
-            
-            int numRowsAffected = conn.Execute(sql, item);
-            if (numRowsAffected == 0) throw new ItemNotFoundException($"{typeof(T).Name} Not Found!");
-            return numRowsAffected;
+
+            int nRows = await conn.ExecuteAsync(sql, item);
+            return nRows != 0 ? nRows : throw new ItemNotFoundException($"{typeof(T).Name} Not Found!");
         }
     }
 
-    public int Delete(T item)
+    public async Task<int> DeleteAsync(T item)
     {
         using (SqlConnection conn = new(_connString))
         {
             string sql = $"DELETE FROM {_tableName} WHERE Id=@Id";
             
-            int numRowsAffected = conn.Execute(sql, item);
-            if (numRowsAffected == 0) throw new ItemNotFoundException($"{typeof(T).Name} Not Found!");
-            return numRowsAffected;
+            int nRows = await conn.ExecuteAsync(sql, item);
+            return nRows != 0 ? nRows : throw new ItemNotFoundException($"{typeof(T).Name} Not Found!");
         }
     }
 
-    public T GetById(int id)
+    public async Task<T> GetByIdAsync(int id)
     {
         using (SqlConnection conn = new(_connString))
         {
             string sql = $"SELECT TOP 1 * FROM {_tableName} WHERE Id=@Id";
-            return conn.QuerySingleOrDefault<T>(sql, new { Id = id }) ?? throw new ItemNotFoundException();
+            return await conn.QuerySingleOrDefaultAsync<T>(sql, new { Id = id }) ?? throw new ItemNotFoundException();
         }
     }
 
-    virtual public List<T> GetAll()
+    public async Task<List<T>> GetAllAsync()
     {
         using (SqlConnection db = new(_connString))
         {
             string sql = $"SELECT * FROM {_tableName}";
-            return db.Query<T>(sql).ToList();  // rows affected
+            return (await db.QueryAsync<T>(sql)).ToList();  // rows affected
         }
     }
 }

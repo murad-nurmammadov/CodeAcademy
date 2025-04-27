@@ -2,5 +2,6 @@
 
 internal class ItemNotFoundException : Exception
 {
-    public ItemNotFoundException(string message = "Item Not Found!") : base(message) { }
+    public ItemNotFoundException(string message = "Item Not Found!") 
+        : base(message) { }
 }
