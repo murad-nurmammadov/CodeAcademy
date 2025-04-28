@@ -1,8 +1,9 @@
-﻿using System.Reflection;
-using Dapper;
+﻿using Dapper;
 using DapperPracticeApp.Exceptions;
+using DapperPracticeApp.Models;
 using DapperPracticeApp.Repositories.Interfaces;
 using Microsoft.Data.SqlClient;
+using System.Reflection;
 
 namespace DapperPracticeApp.Repositories.Implements;
 

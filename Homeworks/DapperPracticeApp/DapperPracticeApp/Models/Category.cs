@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace DapperPracticeApp.Models;
+﻿namespace DapperPracticeApp.Models;
 
 internal class Category
 {
