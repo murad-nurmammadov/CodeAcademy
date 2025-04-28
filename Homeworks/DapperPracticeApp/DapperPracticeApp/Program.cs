@@ -24,10 +24,15 @@ internal class Program
         - Hər əməliyyatdan sonra uğurlu və ya uğursuzluq mesajı göstərilməlidir.
         */
 
+        GenericRepository<Product> prodRepo = new();
+        GenericRepository<Category> catRepo = new("Categories");
+
         string shortcut = "";
 
         while (shortcut != "0")
         {
+            Console.Clear();  // Clear console for fresh menu each time
+
             Console.WriteLine("""                
                 # PRODUCTS #
                 1 -> Add product
@@ -45,13 +50,9 @@ internal class Program
 
                 # EXIT #
                 0 -> Exit
-
                 ==========================
                 Enter shortcut:
                 """);
-
-            GenericRepository<Category> catRepo = new("Categories");
-            GenericRepository<Product> prodRepo = new();
 
             shortcut = Console.ReadLine();
 
@@ -59,113 +60,211 @@ internal class Program
             {
                 case "0": return;
 
-                // ADD, UPDATE, DELETE, GET BY ID, GET ALL
-                case "1":
-                    Product product = _getProductInfo(false);
-                    int nRows = await prodRepo.AddAsync(product);
-                    Console.WriteLine("Product was added successfully!");
-                    break;
+                // Products
+                case "1": AddProduct(prodRepo); break;
+                case "2": UpdateProduct(prodRepo); break;
+                case "3": DeleteProduct(prodRepo); break;
+                case "4": GetProductById(prodRepo); break;
+                case "5": GetAllProducts(prodRepo); break;
 
-                case "2":
-                    try
-                    {
-                        product = _getProductInfo(true);
-                        nRows = await prodRepo.UpdateAsync(product);
-                        Console.WriteLine("Product was added successfully!");
-                    }
-                    catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
-                    break;
+                // Categories
+                case "6": AddCategory(catRepo); break;
+                case "7": UpdateCategory(catRepo); break;
+                case "8": DeleteCategory(catRepo); break;
+                case "9": GetCategoryById(catRepo); break;
+                case "10": GetAllCategories(catRepo); break;
 
-                case "3":
-                    try
-                    {
-                        int id = _getItemId();
-                        nRows = await prodRepo.DeleteAsync(id);
-                        Console.WriteLine("Product was added successfully!");
-                    }
-                    catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
-                    break;
-
-                case "4": break;
-
-                case "5": break;
-
-                // ADD, UPDATE, DELETE, GET BY ID, GET ALL
-                case "6": break;
-                case "7": break;
-                case "8": break;
-                case "9": break;
-                case "10": break;
+                default: Console.WriteLine("Invalid shortcut!"); break;
             }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
-
-        #region Categories
-        //Console.WriteLine("### CATEGORIES ###");
-        //GenericRepository<Category> catRepo = new("Categories");
-        //(await catRepo.GetAllAsync()).ForEach(c => Console.WriteLine(c));
-        //Console.WriteLine("=====================");
-        //await catRepo.AddAsync(new Category(0, "cat-1"));
-        //await catRepo.AddAsync(new Category(0, "cat-2"));
-        //await catRepo.AddAsync(new Category(0, "cat-3"));
-        //await catRepo.AddAsync(new Category(0, "cat-4"));
-        //await catRepo.AddAsync(new Category(0, "cat-5"));
-        //await catRepo.UpdateAsync(new Category(1, "updated-cat-1"));
-        //Console.WriteLine(await catRepo.GetByIdAsync(2));
-        ////Console.WriteLine(catRepo.GetById(200));  // Not found exception
-        ////catRepo.Delete(new Category(5, "..."));
-        //Console.WriteLine("=====================");
-        //(await catRepo.GetAllAsync()).ForEach(c => Console.WriteLine(c));
-        #endregion
-
-        #region Products
-        //Console.WriteLine("### PRODUCTS ###");
-        //GenericRepository<Product> productRepo = new();
-        //(await productRepo.GetAllAsync()).ForEach(c => Console.WriteLine(c));
-        //Console.WriteLine("=====================");
-        //await productRepo.AddAsync(new Product(0, "prod-1", 20, 1));
-        //await productRepo.AddAsync(new Product(0, "prod-2", 20, 2));
-        //await productRepo.UpdateAsync(new Product(1, "updated-prod-1", 20, 2));
-        //Console.WriteLine(await productRepo.GetByIdAsync(2));
-        ////Console.WriteLine(catRepo.GetById(200));  // Not found exception
-        ////productRepo.Delete(new Product(2, "...", 20, 1));
-        //Console.WriteLine("=====================");
-        //(await productRepo.GetAllAsync()).ForEach(p => Console.WriteLine(p));
-        #endregion
     }
 
-    static Product _getProductInfo(bool getId)
+    #region switch - product methods
+    private static async Task AddProduct(GenericRepository<Product> repo)
+    {
+        Product product = GetProductInfo(false);
+        int nRows = await repo.AddAsync(product);
+        Console.WriteLine("Product was successfully added!");
+    }
+    private static async Task UpdateProduct(GenericRepository<Product> repo)
+    {
+        try
+        {
+            Product product = GetProductInfo(true);
+            int nRows = await repo.UpdateAsync(product);
+            Console.WriteLine("Product was successfully updated!");
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+    }
+    private static async Task DeleteProduct(GenericRepository<Product> repo)
+    {
+        try
+        {
+            Product product = GetProductInfo(true);
+            int nRows = await repo.DeleteAsync(product);
+            Console.WriteLine("Product was successfully deleted!");
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+    }
+    private static async Task GetProductById(GenericRepository<Product> repo)
+    {
+        try
+        {
+            int id = GetItemId();
+            Product product = await repo.GetByIdAsync(id);
+            Console.WriteLine("Here is the product:");
+            Console.WriteLine(product);
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+    }
+    private static async Task GetAllProducts(GenericRepository<Product> repo)
+    {
+        try
+        {
+            List<Product> products = await repo.GetAllAsync();
+            Console.WriteLine("Here are the products:");
+            products.ForEach(p => Console.WriteLine(p));
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+    }
+    #endregion
+
+    #region switch - category methods
+    private static async Task AddCategory(GenericRepository<Category> repo)
+    {
+        Category category = GetCategoryInfo(false);
+        int nRows = await repo.AddAsync(category);
+        Console.WriteLine("Category was successfully added !");
+    }
+    private static async Task UpdateCategory(GenericRepository<Category> repo)
+    {
+        try
+        {
+            Category category = GetCategoryInfo(true);
+            int nRows = await repo.UpdateAsync(category);
+            Console.WriteLine("Category was successfully updated!");
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+    }
+    private static async Task DeleteCategory(GenericRepository<Category> repo)
+    {
+        try
+        {
+            Category category = GetCategoryInfo(true);
+            int nRows = await repo.DeleteAsync(category);
+            Console.WriteLine("Category was successfully deleted!");
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+    }
+    private static async Task GetCategoryById(GenericRepository<Category> repo)
+    {
+        try
+        {
+            int id = GetItemId();
+            Category category = await repo.GetByIdAsync(id);
+            Console.WriteLine("Here is the category:");
+            Console.WriteLine(category);
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+
+    }
+    private static async Task GetAllCategories(GenericRepository<Category> repo)
+    {
+        try
+        {
+            List<Category> categories = await repo.GetAllAsync();
+            Console.WriteLine("Here are the categories:");
+            categories.ForEach(p => Console.WriteLine(p));
+        }
+        catch (ItemNotFoundException e) { Console.WriteLine(e.Message); }
+
+    }
+    #endregion
+
+    #region utility methods
+    static Product GetProductInfo(bool getId)
     {
         int id = 0;
         if (getId)
         {
-            Console.WriteLine("Enter product id:");
-            id = Convert.ToInt32(Console.ReadLine());
+            while (true)
+            {
+                Console.WriteLine("Enter product id:");
+                if (int.TryParse(Console.ReadLine(), out id))
+                    break;
+                Console.WriteLine("Id needs to be an integer! Try again...");
+            }
         }
 
-    name_checkpont:
-        Console.WriteLine("Enter product name:");
-        string name = Console.ReadLine();
-
-        if (name is null)
+        string name;
+        while (true)
         {
-            Console.WriteLine("Name cannot be null! Try again...");
-            goto name_checkpont;
+            Console.WriteLine("Enter product name:");
+            name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+                break;
+            Console.WriteLine("Name cannot be empty! Try again...");
         }
 
-        Console.WriteLine("Enter product price:");
-        decimal price = Convert.ToDecimal(Console.ReadLine());
-        Console.WriteLine("Enter product category id:");
-        int categoryId = Convert.ToInt32(Console.ReadLine());
+        decimal price;
+        while (true)
+        {
+            Console.WriteLine("Enter product price:");
+            if (decimal.TryParse(Console.ReadLine(), out price))
+                break;
+            Console.WriteLine("Price needs to be a decimal number! Try again...");
+        }
+
+        int categoryId;
+        while (true)
+        {
+            Console.WriteLine("Enter product's category id:");
+            if (int.TryParse(Console.ReadLine(), out categoryId))
+                break;
+            Console.WriteLine("Category Id needs to be an integer! Try again...");
+        }
 
         return new Product(id, name, price, categoryId);
     }
-
-    static int _getItemId()
+    static Category GetCategoryInfo(bool getId)
     {
-    id_checkpoint:
-        Console.WriteLine("Enter id:");
-        if (int.TryParse(Console.ReadLine(), out int id))
-            return id;
-        else goto id_checkpoint;
+        int id = 0;
+        if (getId)
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter category id:");
+                if (int.TryParse(Console.ReadLine(), out id))
+                    break;
+                Console.WriteLine("Id needs to be an integer! Try again...");
+            }
+        }
+
+        string name;
+        while (true)
+        {
+            Console.WriteLine("Enter category name:");
+            name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+                break;
+            Console.WriteLine("Name cannot be empty! Try again...");
+        }
+
+        return new Category(id, name);
     }
+    static int GetItemId()
+    {
+        int id;
+        while (true)
+        {
+            Console.WriteLine("Enter id:");
+            if (int.TryParse(Console.ReadLine(), out id))
+                return id;
+            Console.WriteLine("Id needs to be integer! Try again...");
+        }
+    }
+    #endregion
 }

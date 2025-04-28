@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\İmplements\" />
+    <Folder Include="Repositories\İnterfaces\" />
   </ItemGroup>
 
 </Project>
