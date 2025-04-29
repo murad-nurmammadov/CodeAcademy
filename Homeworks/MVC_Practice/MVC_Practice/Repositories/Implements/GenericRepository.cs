@@ -73,7 +73,7 @@ public class GenericRepository<T> : IRepository<T>
         using (SqlConnection db = new(_connString))
         {
             string sql = $"SELECT * FROM {_tableName} WHERE Id=@Id";
-            return await db.QuerySingleOrDefaultAsync<T>(sql, new { Id = id }) 
+            return await db.QuerySingleOrDefaultAsync<T>(sql, new { Id = id })
                 ?? throw new ItemNotFoundException<T>();
         }
     }
