@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProniaTemplate.Models;
+using ProniaTemplate.Repositories.Implementations;
 using System.Diagnostics;
 
 namespace ProniaTemplate.Controllers
@@ -13,9 +14,11 @@ namespace ProniaTemplate.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            GenericRepository<Slider> sliderRepo = new GenericRepository<Slider>();
+            var sliders=await sliderRepo.GetAllAsync();
+            return View(sliders);
         }
 
         public IActionResult Privacy()
