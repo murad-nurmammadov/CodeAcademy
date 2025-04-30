@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProniaTemplate.Models;
+using ProniaTemplate.Repositories.Implementations;
 
 namespace ProniaTemplate.Controllers
 {
     public class BlogController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            GenericRepository<Blog> blogRepo = new();
+            List<Blog> blogs = await blogRepo.GetAllAsync();
+            return View(blogs);
         }
     }
 }
