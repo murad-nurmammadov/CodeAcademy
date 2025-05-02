@@ -7,7 +7,7 @@ public class ProniaDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS; Database=ProniaDbContext; Trusted_Connection=True; TrustServerCertificate=True;");
+        optionsBuilder.UseSqlServer(@"Server=DESKTOP-RQO3UFQ\SQLEXPRESS; Database=ProniaDbContext; Trusted_Connection=True; TrustServerCertificate=True;");
         base.OnConfiguring(optionsBuilder);
     }
 

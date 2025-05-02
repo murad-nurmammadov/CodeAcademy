@@ -20,7 +20,7 @@ namespace ProniaTemplate.Controllers
         {
             //GenericRepository<Slider> sliderRepo = new GenericRepository<Slider>();
             //var sliders=await sliderRepo.GetAllAsync();
-            var context = new ProniaDbContext();
+            using var context = new ProniaDbContext();
 
             var sliders = await context.Sliders.ToListAsync();
             var services = await context.Services.ToListAsync();

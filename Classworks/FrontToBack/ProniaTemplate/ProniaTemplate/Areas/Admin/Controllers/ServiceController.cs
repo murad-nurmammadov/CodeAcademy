@@ -14,8 +14,7 @@ public class ServiceController : Controller
         return View(sliders);
     }
 
-    [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
         return View();
     }
@@ -50,4 +49,5 @@ public class ServiceController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
 }
