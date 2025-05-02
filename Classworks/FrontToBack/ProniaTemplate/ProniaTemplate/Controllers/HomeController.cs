@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProniaTemplate.Contexts;
 using ProniaTemplate.Models;
-using ProniaTemplate.Repositories.Implementations;
+using ProniaTemplate.ViewModels;
 using System.Diagnostics;
 
 namespace ProniaTemplate.Controllers
@@ -16,9 +18,19 @@ namespace ProniaTemplate.Controllers
 
         public async Task<IActionResult> Index()
         {
-            GenericRepository<Slider> sliderRepo = new GenericRepository<Slider>();
-            var sliders=await sliderRepo.GetAllAsync();
-            return View(sliders);
+            //GenericRepository<Slider> sliderRepo = new GenericRepository<Slider>();
+            //var sliders=await sliderRepo.GetAllAsync();
+            var context = new ProniaDbContext();
+
+            var sliders = await context.Sliders.ToListAsync();
+            var services = await context.Services.ToListAsync();
+
+            HomeViewModel model = new()
+            {
+                Sliders = sliders,
+                Services = services,
+            };
+            return View(model);
         }
 
         public IActionResult Privacy()
