@@ -1,7 +1,11 @@
+using Techan.Contexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<TechanDbContext>();
 
 var app = builder.Build();
 

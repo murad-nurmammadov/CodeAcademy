@@ -1,0 +1,93 @@
+﻿@model ProductViewModel
+
+<section class="content-main">
+    <form asp-controller="AddProduct" asp-action="Create" method="post">
+
+        <div class="row">
+            <div class="col-6">
+                <div class="content-header">
+                    <h2 class="content-title">Add New Product</h2>
+                    <div>
+                        <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
+                        <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>1. General info</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    <label class="form-label">Product title</label>
+                                    <input type="text" placeholder="Type here" class="form-control">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Brand name</label>
+                                    <select class="form-select">
+                                        @foreach (var item in Model.Categories)
+                                        {
+                                            <option value="@item.Id"> @item.Name </option>
+                                        }
+                                    </select>
+                                </div>
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <hr class="mb-4 mt-0">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>2. Pricing</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    <label class="form-label">Cost in USD</label>
+                                    <input type="text" placeholder="0.0" class="form-control">
+                                </div>
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <hr class="mb-4 mt-0">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>3. Category</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    @foreach (var item in Model.Categories)
+                                    {
+                                        <label class="mb-2 form-check form-check-inline" style="width: 45%;">
+                                            <input class="form-check-input" name="mycategory" type="radio" value="@item.Id">
+                                            <span class="form-check-label"> @item.Name </span>
+                                        </label>
+                                    }
+                                </div>
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <hr class="mb-4 mt-0">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>4. Media</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="mb-4">
+                                    <label class="form-label">Images</label>
+                                    <input class="form-control" type="file">
+                                </div>
+                            </div> <!-- col.// -->
+                        </div> <!-- .row end// -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>
