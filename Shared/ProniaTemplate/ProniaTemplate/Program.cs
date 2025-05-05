@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ProniaTemplate.Contexts;
 
 namespace ProniaTemplate
 {
@@ -10,6 +11,7 @@ namespace ProniaTemplate
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ProniaDbContext>();
 
             var app = builder.Build();
 
