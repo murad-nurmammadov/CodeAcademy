@@ -32,29 +32,63 @@
             @* NOT FIISHED *@
             <ul class="menu-aside">
                 <li class="menu-item active">
-                    <a class="menu-link" asp-area="Admin" asp-controller="Home">
+                    <a class="menu-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
                         <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a class="menu-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
+
+                @* Brands *@
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Brands</span>
+                    </a>
+                    <div class="submenu">
+                        <a asp-area="Admin" asp-controller="Brand" asp-action="Index">Get Brand</a>
+                        <a asp-area="Admin" asp-controller="Brand" asp-action="Create">Add Brand</a>
+                    </div>
+                </li>
+
+                @* Categories *@
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Categories</span>
+                    </a>
+                    <div class="submenu">
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Index">Get Categories</a>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Create">Add Category</a>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Update">Update Category</a>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Delete">Delete Category</a>
+                    </div>
+                </li>
+
+                @* PRODUCTS *@
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#">
                         <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Products</span>
                     </a>
+                    <div class="submenu">
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Index">Get Products</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Update">Update Product</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Delete">Delete Product</a>
+                    </div>
                 </li>
 
-                @* ADD *@
+                @* Sliders *@
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="#">
-                        <i class="icon material-icons md-person"></i>
-                        <span class="text">Add Product</span>
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Sliders</span>
                     </a>
                     <div class="submenu">
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
-                        <a asp-area="Admin" asp-controller="Brand" asp-action="Create">Add Brand</a>
-                        <a asp-area="Admin" asp-controller="Category" asp-action="Create">Add Category</a>
+                        <a asp-area="Admin" asp-controller="Slider">Get Sliders</a>
                         <a asp-area="Admin" asp-controller="Slider" asp-action="Create">Add Slider</a>
+                        <a asp-area="Admin" asp-controller="Slider" asp-action="Update">Update Slider</a>
+                        <a asp-area="Admin" asp-controller="Slider" asp-action="Delete">Delete Slider</a>
                     </div>
                 </li>
 
