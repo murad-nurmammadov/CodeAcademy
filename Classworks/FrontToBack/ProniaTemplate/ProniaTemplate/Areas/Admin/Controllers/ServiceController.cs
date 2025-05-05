@@ -19,6 +19,16 @@ public class ServiceController : Controller
         return View();
     }
 
+    public async Task<IActionResult> Update()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> Delete()
+    {
+        return View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(Service service)
     {
