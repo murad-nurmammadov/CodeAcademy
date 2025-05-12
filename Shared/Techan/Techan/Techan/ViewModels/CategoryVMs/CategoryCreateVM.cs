@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Techan.ViewModels.BrandVMs;
+namespace Techan.ViewModels.CategoryVMs;
 
-public class BrandCreateVM
+public class CategoryCreateVM
 {
     [MaxLength(100)]
     public string Name { get; set; }
-    public IFormFile? Logo { get; set; }
 }

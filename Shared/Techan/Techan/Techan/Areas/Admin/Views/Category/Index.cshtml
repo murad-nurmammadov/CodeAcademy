@@ -1,9 +1,9 @@
-﻿@model List<Brand>
+﻿@model List<Category>
 
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Brand List</h2>
+            <h2 class="content-title card-title">Category List</h2>
         </div>
         <div>
             <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
@@ -26,7 +26,7 @@
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
                                 <div class="left">
-                                    <img src="@item.LogoPath" class="img-sm img-thumbnail" alt="Item">
+                                    <img src="assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item">
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-0">@item.Name</h6>
@@ -35,11 +35,11 @@
                         </div>
 
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a asp-area="Admin" asp-controller="Brand" asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-brand">
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-brand">
                                 <i class="material-icons md-edit"></i> Edit
                             </a>
 
-                            <form asp-area="Admin" asp-controller="Brand" asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
+                            <form asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-sm font-sm btn-light rounded">
                                     <i class="material-icons md-delete_forever"></i> Delete
                                 </button>

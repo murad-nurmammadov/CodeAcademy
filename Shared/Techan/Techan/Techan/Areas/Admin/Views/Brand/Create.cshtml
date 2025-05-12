@@ -1,7 +1,7 @@
-﻿@model Techan.ViewModels.BrandVM.BrandCreateVM
+﻿@model Techan.ViewModels.BrandVMs.BrandCreateVM
 
 <section class="content-main">
-    <form asp-controller="Brand" asp-action="Create" method="post">
+    <form asp-controller="Brand" asp-action="Create" method="post" enctype="multipart/form-data">
 
         <div class="row">
             <div class="col-6">
@@ -17,6 +17,7 @@
                     <div class="card-body">
                         <div class="row">
 
+                            @* Name *@
                             <div class="col-md-9">
                                 <div class="mb-4">
                                     <label asp-for="Name" class="form-label">Brand Name</label>
@@ -25,18 +26,19 @@
                                 </div>
                             </div>
 
+                            @* Logo *@
                             <div class="col-md-9">
                                 <div class="mb-4">
-                                    <label class="form-label">Image</label>
-                                    <input type="file" class="form-control">
-                                    <span class="text-danger"></span>
+                                    <label asp-for="Logo" class="form-label">Image</label>
+                                    <input asp-for="Logo" type="file" class="form-control">
+                                    <span asp-validation-for="Logo" class="text-danger"></span>
                                 </div>
                             </div>
 
-                            @* TODO *@
+                            @* Create Button *@
                             <div class="col-md-9">
                                 <div class="mb-4">
-                                    <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
+                                    <button type="submit" class="btn btn-md rounded font-sm hover-up">Create</button>
                                 </div>
                             </div>
 

@@ -1,6 +1,6 @@
-﻿namespace Techan.Models;
+﻿namespace Techan.ViewModels.BrandVMs;
 
-public class Brand : BaseEntity
+public class BrandGetVM
 {
     public string Name { get; set; }
     public string? LogoPath { get; set; }

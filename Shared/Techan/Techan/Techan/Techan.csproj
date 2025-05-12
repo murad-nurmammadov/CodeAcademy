@@ -19,6 +19,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\admin\assets\fonts\material-icon\css\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

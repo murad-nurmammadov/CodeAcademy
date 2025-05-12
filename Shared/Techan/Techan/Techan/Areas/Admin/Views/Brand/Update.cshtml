@@ -1,4 +1,4 @@
-﻿@model Techan.Models.Brand
+﻿@model Techan.ViewModels.BrandVMs.BrandUpdateVM
 
 <section class="content-main">
     <form asp-controller="Brand" asp-action="Update" method="post">
@@ -17,27 +17,32 @@
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    <label asp-for="Name" class="form-label">Brand Name</label>
-                                    <input asp-for="Name" type="text" placeholder="Type here" class="form-control">
-                                    <span asp-validation-for="Name" class="text-danger"></span>
+                            @* Current Logo *@
+                            @if (!string.IsNullOrEmpty(Model.ExistingLogoPath))
+                            {
+                                <div class="col-md-9 mb-4">
+                                    <p>Current Logo:</p>
+                                    <img src="@Model.ExistingLogoPath" width="70" />
                                 </div>
+                            }
+
+                            @* Name *@
+                            <div class="col-md-9 mb-4">
+                                <label asp-for="Name" class="form-label">Brand Name</label>
+                                <input asp-for="Name" type="text" placeholder="Type here" class="form-control">
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
 
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    <label class="form-label">Image</label>
-                                    <input type="file" class="form-control">
-                                    <span class="text-danger"></span>
-                                </div>
+                            @* Logo *@
+                            <div class="col-md-9 mb-4">
+                                <label asp-for="NewLogo" class="form-label">Image</label>
+                                <input asp-for="NewLogo" type="file" class="form-control">
+                                <span asp-validation-for="NewLogo" class="text-danger"></span>
                             </div>
 
-                            @* TODO *@
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
-                                </div>
+                            @* Create Button *@
+                            <div class="col-md-9 mb-4">
+                                <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
                             </div>
 
                         </div>
