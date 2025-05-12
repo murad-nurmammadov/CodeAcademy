@@ -68,17 +68,9 @@
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
 
                                 @* repeating part *@
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Services CRUD
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-area="Admin" asp-controller="Service" asp-action="Create">Create</a>
-                                        <a class="nav-link" asp-area="Admin" asp-controller="Service" asp-action="Update">Update</a>
-                                        <a class="nav-link" asp-area="Admin" asp-controller="Service" asp-action="Delete">Delete</a>
-                                    </nav>
-                                </div>
+                                <a class="nav-link" asp-controller="Service">Services</a>
+
+
                                 @* repeating part *@
 
                             </nav>
