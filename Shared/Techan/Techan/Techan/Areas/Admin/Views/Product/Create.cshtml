@@ -1,96 +1,105 @@
-﻿@model ProductViewModel
+﻿@model Techan.ViewModels.ProductVMs.ProductCreateVM
 
 <section class="content-main">
-    <form asp-controller="AddProduct" asp-action="Create" method="post">
+    <form asp-controller="Product" asp-action="Create" method="post" enctype="multipart/form-data">
 
-        <div class="row">
-            <div class="col-6">
-                <div class="content-header">
-                    <h2 class="content-title">Add New Product</h2>
-                    <div>
-                        <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
-                        <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
+        <div class="row col-6 content-header">
+            <h2 class="content-title">Add New Product</h2>
+        </div>
+
+        <div class="row col-lg-6 card mb-4 card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <h6>1. General info</h6>
+                </div>
+                <div class="col-md-9">
+
+                    @* Title *@
+                    <div class="mb-4">
+                        <label asp-for="Title" class="form-label">Product title</label>
+                        <input asp-for="Title" type="text" placeholder="Type here" class="form-control">
+                        <span asp-validation-for="Title" class="text-danger sm"></span>
+                    </div>
+
+                    @* Description *@
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label">Description</label>
+                        <textarea asp-for="Description" placeholder="Type here" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger sm"></span>
+                    </div>
+
+                    @* Brand *@
+                    <div class="mb-4">
+                        <label asp-for="BrandId" class="form-label">Brand name</label>
+                        <select asp-for="BrandId" class="form-select">
+                            <option value="" selected disabled>Select Option</option>
+                            @foreach (var item in Model.Brands)
+                            {
+                                <option value="@item.Id"> @item.Name </option>
+                            }
+                        </select>
+                        <span asp-validation-for="BrandId" class="text-danger sm"></span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h6>1. General info</h6>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    <label class="form-label">Product title</label>
-                                    <input type="text" placeholder="Type here" class="form-control">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" rows="4"></textarea>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Brand name</label>
-                                    <select class="form-select">
-                                        @foreach (var item in Model.Categories)
-                                        {
-                                            <option value="@item.Id"> @item.Name </option>
-                                        }
-                                    </select>
-                                </div>
-                            </div> <!-- col.// -->
-                        </div> <!-- row.// -->
-                        <hr class="mb-4 mt-0">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h6>2. Pricing</h6>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    <label class="form-label">Cost in USD</label>
-                                    <input type="text" placeholder="0.0" class="form-control">
-                                </div>
-                            </div> <!-- col.// -->
-                        </div> <!-- row.// -->
-                        <hr class="mb-4 mt-0">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h6>3. Category</h6>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    @foreach (var item in Model.Categories)
-                                    {
-                                        <label class="mb-2 form-check form-check-inline" style="width: 45%;">
-                                            <input class="form-check-input" name="mycategory" type="radio" value="@item.Id">
-                                            <span class="form-check-label"> @item.Name </span>
-                                        </label>
-                                    }
-                                </div>
-                            </div> <!-- col.// -->
-                        </div> <!-- row.// -->
+            <hr class="mb-4 mt-0">
 
-                        <hr class="mb-4 mt-0">
-                        
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h6>4. Media</h6>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="mb-4">
-                                    <label class="form-label">Images</label>
-                                    <input class="form-control" type="file">
-                                </div>
-                            </div> <!-- col.// -->
-                        </div> <!-- .row end// -->
+            <div class="row">
+                <div class="col-md-3">
+                    <h6>2. Pricing</h6>
+                </div>
 
-                    </div>
+                @* Cost *@
+                <div class="col-md-9 mb-4">
+                    <label asp-for="Cost" class="form-label">Cost in USD</label>
+                    <input asp-for="Cost" type="number" placeholder="Type here" class="form-control">
+                    <span asp-validation-for="Cost" class="text-danger sm"></span>
+                </div>
+            </div> 
+
+            <hr class="mb-4 mt-0">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h6>3. Category</h6>
+                </div>
+
+                @* Category *@
+                <div class="col-md-9 mb-4">
+                    <label asp-for="CategoryId" class="form-label">Category name</label>
+                    <select asp-for="CategoryId" class="form-select">
+                        <option value="" selected disabled>Select Option</option>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <option value="@item.Id"> @item.Name </option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger sm"></span>
                 </div>
             </div>
-        </div>
 
+            <hr class="mb-4 mt-0">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h6>4. Media</h6>
+                </div>
+
+                @* Image *@
+                <div class="col-md-9 mb-4">
+                    <label asp-for="Image" class="form-label">Images</label>
+                    <input asp-for="Image" class="form-control" type="file">
+                    <span asp-validation-for="Image" class="text-danger sm"></span>
+                </div> 
+            </div>
+
+            @* Create Button *@
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Create product</button>
+            </div>
+
+        </div>
     </form>
+
 </section>

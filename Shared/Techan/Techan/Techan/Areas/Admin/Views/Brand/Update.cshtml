@@ -1,7 +1,7 @@
 ﻿@model Techan.ViewModels.BrandVMs.BrandUpdateVM
 
 <section class="content-main">
-    <form asp-controller="Brand" asp-action="Update" method="post">
+    <form asp-action="Update" method="post" enctype="multipart/form-data">
 
         <div class="row">
             <div class="col-6">
@@ -18,11 +18,11 @@
                         <div class="row">
 
                             @* Current Logo *@
-                            @if (!string.IsNullOrEmpty(Model.ExistingLogoPath))
+                            @if (!string.IsNullOrEmpty(Model.LogoPath))
                             {
                                 <div class="col-md-9 mb-4">
                                     <p>Current Logo:</p>
-                                    <img src="@Model.ExistingLogoPath" width="70" />
+                                    <img src="@Model.LogoPath" width="70" />
                                 </div>
                             }
 
@@ -40,9 +40,9 @@
                                 <span asp-validation-for="NewLogo" class="text-danger"></span>
                             </div>
 
-                            @* Create Button *@
+                            @* Update Button *@
                             <div class="col-md-9 mb-4">
-                                <button type="submit" class="btn btn-md rounded font-sm hover-up">Publish</button>
+                                <button type="submit" class="btn btn-md rounded font-sm hover-up">Update</button>
                             </div>
 
                         </div>

@@ -1,70 +1,98 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Techan.Contexts;
 using Techan.Models;
-using Techan.ViewModels;
+using Techan.ViewModels.BrandVMs;
+using Techan.ViewModels.CategoryVMs;
+using Techan.ViewModels.ProductVMs;
 
 namespace Techan.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class ProductController : Controller
+public class ProductController(TechanDbContext _context) : Controller
 {
-    private readonly TechanDbContext _context;
-
-    public ProductController(TechanDbContext context)
-    {
-        _context = context;
-    }
-
+    // Check everything below
+    // TODO everything below
     public async Task<IActionResult> Index()
     {
-        List<Product> products = await _context.Products.ToListAsync();
-
-        ProductViewModel model = new()
+        var vm = new ProductIndexVM()
         {
-            Products = products,
+            Categories = await _context.Categories
+                .Select(c => new CategoryGetVM { Id = c.Id, Name = c.Name })
+                .ToListAsync(),
+
+            Products = await _context.Products
+                .Select(p => new ProductGetVM
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Cost = p.Cost,
+                    DateAdded = p.DateAdded,
+                    ImagePath = p.ImagePath,
+                })
+                .ToListAsync(),
         };
 
-        return View(model);
+        return View(vm);
     }
 
-    [HttpGet]
     public async Task<IActionResult> Create()
     {
-        List<Brand> brands = await _context.Brands.ToListAsync();
-        List<Category> categories = await _context.Categories.ToListAsync();
+        var vm = new ProductCreateVM();
+        await PopulateDropdownsAsync(vm);
+        return View(vm);
+    }
 
-        ProductViewModel model = new ProductViewModel()
+    [HttpPost, AutoValidateAntiforgeryToken]
+    public async Task<IActionResult> Create(ProductCreateVM model)
+    {
+        if (!ModelState.IsValid)
         {
-            Brands = brands,
-            Categories = categories,
+            await PopulateDropdownsAsync(model);
+            return View(model);
+        }
+
+        string? imagePath = null;
+
+        if (model.Image != null)
+        {
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+            string fullPath = Path.Combine("wwwroot", "uploads", fileName);
+
+            using var fs = new FileStream(fullPath, FileMode.Create);
+            await model.Image.CopyToAsync(fs);
+
+            imagePath = "/uploads/" + fileName;
+        }
+
+        var product = new Product()
+        {
+            Title = model.Title,
+            Description = model.Description,
+            BrandId = model.BrandId,
+            Cost = model.Cost,
+            CategoryId = model.CategoryId,
+            ImagePath = imagePath,
+            DateAdded = DateTime.UtcNow,
         };
 
-        return View(model);
+        await _context.Products.AddAsync(product);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost]
-    public IActionResult Create(Product product)
-    {
-        return View();
-    }
 
-    [HttpGet]
-    public IActionResult Update()
+    // Helper Method
+    private async Task PopulateDropdownsAsync(ProductCreateVM model)
     {
-        return View();
-    }
+        model.Categories = await _context.Categories
+            .Select(c => new CategoryGetVM { Id = c.Id, Name = c.Name })
+            .ToListAsync();
 
-    [HttpPost]
-    public IActionResult Update(Product product)
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Delete()
-    {
-        return View();
+        model.Brands = await _context.Brands
+            .Select(b => new BrandGetVM { Id = b.Id, Name = b.Name })
+            .ToListAsync();
     }
 }

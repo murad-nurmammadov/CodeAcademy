@@ -11,8 +11,8 @@ using Techan.Contexts;
 namespace Techan.Migrations
 {
     [DbContext(typeof(TechanDbContext))]
-    [Migration("20250511100806_initialization")]
-    partial class initialization
+    [Migration("20250513190538_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,18 @@ namespace Techan.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ParentCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Slug")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

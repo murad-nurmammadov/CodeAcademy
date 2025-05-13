@@ -2,9 +2,9 @@
 
 namespace Techan.ViewModels.CategoryVMs;
 
-public class CategoryCreateVM
+public class CategoryUpdateVM
 {
-    // For Create Post
+    public int Id { get; set; }
     [MaxLength(64)]
     public string Name { get; set; }
     [MaxLength(256)]
@@ -13,6 +13,6 @@ public class CategoryCreateVM
     public string? Slug { get; set; }
     public int? ParentCategoryId { get; set; }
 
-    // For Create View
+    // For Update View
     public List<CategoryGetVM>? ParentCategories { get; set; }
 }

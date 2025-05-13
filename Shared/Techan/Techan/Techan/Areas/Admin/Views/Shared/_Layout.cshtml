@@ -28,85 +28,76 @@
                 <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
             </div>
         </div>
+
         <nav>
-            @* NOT FIISHED *@
             <ul class="menu-aside">
+
+                @* Dashboard *@
                 <li class="menu-item active">
-                    <a class="menu-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <a class="menu-link" asp-controller="Home" asp-action="Index">
                         <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
 
-                @* Brands *@
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#">
-                        <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Brands</span>
-                    </a>
-                    <div class="submenu">
-                        <a asp-area="Admin" asp-controller="Brand" asp-action="Index">Get Brand</a>
-                        <a asp-area="Admin" asp-controller="Brand" asp-action="Create">Add Brand</a>
-                    </div>
-                </li>
-
-                @* Categories *@
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#">
-                        <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Categories</span>
-                    </a>
-                    <div class="submenu">
-                        <a asp-area="Admin" asp-controller="Category" asp-action="Index">Get Categories</a>
-                        <a asp-area="Admin" asp-controller="Category" asp-action="Create">Add Category</a>
-                    </div>
-                </li>
-
-                @* PRODUCTS *@
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#">
+                    <a class="menu-link" href="page-products-list.html">
                         <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Products</span>
                     </a>
                     <div class="submenu">
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Index">Get Products</a>
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
+                        <a asp-controller="Product" asp-action="Index">Product List</a>
+                        <a asp-controller="Category" asp-action="Index">Categories</a>
                     </div>
                 </li>
 
-                @* Sliders *@
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#">
-                        <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Sliders</span>
-                    </a>
-                    <div class="submenu">
-                        <a asp-area="Admin" asp-controller="Slider" asp-action="Index">Get Sliders</a>
-                        <a asp-area="Admin" asp-controller="Slider" asp-action="Create">Add Slider</a>
-                    </div>
-                </li>
-
-                <li class="menu-item">
-                    <a class="menu-link" asp-area="Admin" asp-controller="Orders">
+                    <a class="menu-link" href="page-orders-1.html">
                         <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Orders</span>
                     </a>
+                    <div class="submenu">
+                        <a href="page-orders-1.html">Order list 1</a>
+                        <a href="page-orders-2.html">Order list 2</a>
+                        <a href="page-orders-detail.html">Order detail</a>
+                        <a href="page-orders-tracking.html">Order tracking</a>
+                        <a href="page-invoice.html">Invoice</a>
+                    </div>
                 </li>
-                <li class="menu-item">
-                    <a class="menu-link" asp-area="Admin" asp-controller="Sellers">
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-sellers-cards.html">
                         <i class="icon material-icons md-store"></i>
                         <span class="text">Sellers</span>
                     </a>
+                    <div class="submenu">
+                        <a href="page-sellers-cards.html">Sellers cards</a>
+                        <a href="page-sellers-list.html">Sellers list</a>
+                        <a href="page-seller-detail.html">Seller profile</a>
+                    </div>
                 </li>
-                <li class="menu-item">
-                    <a class="menu-link" asp-area="Admin" asp-controller="Transactions">
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-form-product-1.html">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add product</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-form-product-1.html">Add product 1</a>
+                        <a href="page-form-product-2.html">Add product 2</a>
+                        <a href="page-form-product-3.html">Add product 3</a>
+                        <a href="page-form-product-4.html">Add product 4</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-transactions-1.html">
                         <i class="icon material-icons md-monetization_on"></i>
                         <span class="text">Transactions</span>
                     </a>
+                    <div class="submenu">
+                        <a href="page-transactions-1.html">Transaction 1</a>
+                        <a href="page-transactions-2.html">Transaction 2</a>
+                        <a href="page-transactions-details.html">Transaction Details</a>
+                    </div>
                 </li>
-
-                <hr>
-
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="#">
                         <i class="icon material-icons md-person"></i>
@@ -124,12 +115,14 @@
                         <span class="text">Reviews</span>
                     </a>
                 </li>
+
                 <li class="menu-item">
-                    <a class="menu-link" href="page-brands.html">
+                    <a asp-controller="Brand" asp-action="Index" class="menu-link">
                         <i class="icon material-icons md-stars"></i>
                         <span class="text">Brands</span>
                     </a>
                 </li>
+
                 <li class="menu-item">
                     <a class="menu-link" disabled href="#">
                         <i class="icon material-icons md-pie_chart"></i>
@@ -137,9 +130,7 @@
                     </a>
                 </li>
             </ul>
-
             <hr>
-
             <ul class="menu-aside">
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="#">

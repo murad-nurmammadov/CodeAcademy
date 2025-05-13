@@ -1,12 +1,78 @@
-﻿@model List<Category>
+﻿@using Techan.ViewModels.CategoryVMs
+@model List<CategoryGetVM>
 
+<section class="content-main">
+
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Categories </h2>
+        </div>
+        <div>
+            <input type="text" placeholder="Search Categories" class="form-control bg-white">
+        </div>
+        <div>
+            <a asp-action="Create" class="btn btn-primary btn-sm rounded">Create new</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Slug</th>
+                                    <th>Order</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (CategoryGetVM item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td><b>@item.Name</b></td>
+                                        <td>@item.Description</td>
+                                        <td>@item.Slug</td>
+                                        <td>@item.OrderCount</td>
+                                        <td class="text-end">
+                                            <div>
+                                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-brand">
+                                                    <i class="material-icons md-edit"></i> Edit
+                                                </a>
+
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-light">
+                                                    <i class="material-icons md-delete_forever"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- .col// -->
+            </div> <!-- .row // -->
+        </div> <!-- card body .// -->
+    </div> <!-- card .// -->
+
+</section>
+
+@* 
 <section class="content-main">
     <div class="content-header">
         <div>
             <h2 class="content-title card-title">Category List</h2>
         </div>
         <div>
-            <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
+            <a asp-action="Create" class="btn btn-primary btn-sm rounded">Create new</a>
         </div>
     </div>
 
@@ -22,12 +88,9 @@
                                 <input class="form-check-input" type="checkbox">
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
-                                <div class="left">
-                                    <img src="assets/imgs/items/1.jpg" class="img-sm img-thumbnail" alt="Item">
-                                </div>
                                 <div class="info">
                                     <h6 class="mb-0">@item.Name</h6>
                                 </div>
@@ -35,15 +98,13 @@
                         </div>
 
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-brand">
+                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-brand">
                                 <i class="material-icons md-edit"></i> Edit
                             </a>
 
-                            <form asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-sm font-sm btn-light rounded">
-                                    <i class="material-icons md-delete_forever"></i> Delete
-                                </button>
-                            </form>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-light">
+                                <i class="material-icons md-delete_forever"></i> Delete
+                            </a>
                         </div>
 
                     </div> <!-- row .// -->
@@ -65,3 +126,4 @@
         </nav>
     </div>
 </section>
+ *@
