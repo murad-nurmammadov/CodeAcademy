@@ -12,7 +12,4 @@ public class CategoryUpdateVM
     [MaxLength(16)]
     public string? Slug { get; set; }
     public int? ParentCategoryId { get; set; }
-
-    // For Update View
-    public List<CategoryGetVM>? ParentCategories { get; set; }
 }

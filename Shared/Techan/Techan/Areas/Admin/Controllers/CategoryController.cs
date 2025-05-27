@@ -8,43 +8,41 @@ namespace Techan.Areas.Admin.Controllers;
 
 public class CategoryController(TechanDbContext _context) : AdminBaseController
 {
-    // CHECK everything below
-    // TODO everything below
     public async Task<IActionResult> Index()
     {
-        List<Category> categories = await _context.Categories.ToListAsync();
-        List<CategoryGetVM> vms = categories.Select(c => new CategoryGetVM()
+        List<CategoryGetVM> vms = await _context.Categories.Select(c => new CategoryGetVM()
         {
             Id = c.Id,
             Name = c.Name,
             Description = c.Description,
             Slug = c.Slug,
-        }).ToList();
+        }).ToListAsync();
 
         return View(vms);
     }
 
     public async Task<IActionResult> Create()
     {
-        List<Category> parentCategories = await _context.Categories.ToListAsync();
+        await FillViewBagAsync();
 
-        var vm = new CategoryCreateVM()
-        {
-            ParentCategories = parentCategories.Select(c => new CategoryGetVM()
-            {
-                Id = c.Id,
-                Name = c.Name,
-            }).ToList(),
-        };
-
-        return View(vm);
+        return View();
     }
 
     [HttpPost, AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Create(CategoryCreateVM model)
     {
         if (!ModelState.IsValid)
+        {
+            await FillViewBagAsync();
             return View(model);
+        }
+
+        if (model.ParentCategoryId != null && await _context.Categories.FindAsync(model.ParentCategoryId) == null)
+        {
+            ModelState.AddModelError("ParentCategoryId", "Invalid parent category id!");
+            await FillViewBagAsync();
+            return View(model);
+        }
 
         var category = new Category()
         {
@@ -62,42 +60,48 @@ public class CategoryController(TechanDbContext _context) : AdminBaseController
 
     public async Task<IActionResult> Update(int id)
     {
-        List<Category> categories = await _context.Categories.ToListAsync();
-
-        Category? category = await _context.Categories.FindAsync(id);
-
-        if (category == null)
+        Category? entity = await _context.Categories.FindAsync(id);
+        if (entity == null)
             return NotFound();
 
-        var vm = new CategoryUpdateVM()
+        var model = new CategoryUpdateVM()
         {
-            Id = category.Id,
-            Name = category.Name,
-            ParentCategories = categories.Select(c => new CategoryGetVM()
-            {
-                Id = c.Id,
-                Name = c.Name,
-            }).ToList(),
+            Id = entity.Id,
+            Name = entity.Name,
+            Description = entity.Description,
+            Slug = entity.Slug,
+            ParentCategoryId = entity.ParentCategoryId,
         };
 
-        return View(vm);
+        await FillViewBagAsync();
+        
+        return View(model);
     }
 
     [HttpPost, AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Update(CategoryUpdateVM model)
     {
         if (!ModelState.IsValid)
+        {
+            await FillViewBagAsync();
             return View(model);
+        }
 
-        Category? category = await _context.Categories.FindAsync(model.Id);
+        if (model.ParentCategoryId != null && await _context.Categories.FindAsync(model.ParentCategoryId) == null)
+        {
+            ModelState.AddModelError("ParentCategoryId", "Invalid parent category id!");
+            await FillViewBagAsync();
+            return View(model);
+        }
 
-        if (category == null)
+        Category? entity = await _context.Categories.FindAsync(model.Id);
+        if (entity == null)
             return NotFound();
 
-        category.Name = model.Name;
-        category.Description = model.Description;
-        category.Slug = model.Slug;
-        category.ParentCategoryId = model.ParentCategoryId;
+        entity.Name = model.Name;
+        entity.Description = model.Description;
+        entity.Slug = model.Slug;
+        entity.ParentCategoryId = model.ParentCategoryId;
 
         await _context.SaveChangesAsync();
 
@@ -107,14 +111,25 @@ public class CategoryController(TechanDbContext _context) : AdminBaseController
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        Category? category = await _context.Categories.FindAsync(id);
-
-        if (category == null)
+        Category? entity = await _context.Categories.FindAsync(id);
+        if (entity == null)
             return NotFound();
 
-        _context.Remove(category);
+        _context.Remove(entity);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
     }
+
+
+    #region helper methods
+    public async Task FillViewBagAsync()
+    {
+        ViewBag.ParentCategories = await _context.Categories.Select(c => new CategoryGetVM()
+        {
+            Id = c.Id,
+            Name = c.Name,
+        }).ToListAsync();
+    }
+    #endregion
 }

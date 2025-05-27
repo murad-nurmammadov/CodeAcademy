@@ -9,39 +9,40 @@
 
     <div class="card card-body">
         <div class="col-md-3">
-            <form asp-action="Create" method="post">
+            <form method="post">
 
                 @* Name *@
                 <div class="mb-4">
                     <label asp-for="Name" class="form-label">Name</label>
-                    <input asp-for="Name" type="text" placeholder="Type here" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input asp-for="Name" placeholder="Type here" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger sm"></span>
                 </div>
 
                 @* Slug *@
                 <div class="mb-4">
-                    <label asp-for="Slug" class="form-label">Name</label>
-                    <input asp-for="Slug" type="text" placeholder="Type here" class="form-control" />
-                    <span asp-validation-for="Slug" class="text-danger"></span>
+                    <label asp-for="Slug" class="form-label">Slug</label>
+                    <input asp-for="Slug" placeholder="Type here" class="form-control" />
+                    <span asp-validation-for="Slug" class="text-danger sm"></span>
                 </div>
 
                 @* Parent Categories *@
                 <div class="mb-4">
-                    <label class="form-label">Parent</label>
-                    <select class="form-select">
-                        <option selected disabled>Select Option</option>
-                        @foreach (CategoryGetVM item in Model.ParentCategories)
+                    <label asp-for ="ParentCategoryId" class="form-label">Parent</label>
+                    <select asp-for="ParentCategoryId" class="form-select">
+                        <option value="">Select Option</option>
+                        @foreach (CategoryGetVM item in ViewBag.ParentCategories)
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
                     </select>
+                    <span asp-validation-for="ParentCategoryId" class="text-danger sm"></span>
                 </div>
 
                 @* Description *@
                 <div class="mb-4">
                     <label asp-for="Description" class="form-label">Description</label>
-                    <input asp-for="Description" type="text" placeholder="Type here" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <input asp-for="Description" placeholder="Type here" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger sm"></span>
                 </div>
 
                 @* Create Button *@
