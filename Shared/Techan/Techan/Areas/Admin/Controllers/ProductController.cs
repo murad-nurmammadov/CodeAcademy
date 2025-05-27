@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Techan.Contexts;
+using Techan.Extensions;
 using Techan.Models;
 using Techan.ViewModels.BrandVMs;
 using Techan.ViewModels.CategoryVMs;
@@ -8,39 +9,42 @@ using Techan.ViewModels.ProductVMs;
 
 namespace Techan.Areas.Admin.Controllers;
 
-public class ProductController(TechanDbContext _context) : AdminBaseController
+public class ProductController : AdminBaseController
 {
-    // Check everything below
-    // TODO everything below
+    private readonly TechanDbContext _context;
+    private readonly IWebHostEnvironment _env;
+    private readonly string _rootPath;
+
+    public ProductController(TechanDbContext context, IWebHostEnvironment env)
+    {
+        _context = context;
+        _env = env;
+        _rootPath = Path.Combine(env.WebRootPath, "uploads", "products");
+        Directory.CreateDirectory(_rootPath);
+    }
+
     public async Task<IActionResult> Index()
     {
-        var vm = new ProductIndexVM()
+        List<ProductGetVM> vms = await _context.Products.Select(p => new ProductGetVM
         {
-            Categories = await _context.Categories
-                .Select(c => new CategoryGetVM { Id = c.Id, Name = c.Name })
-                .ToListAsync(),
+            Id = p.Id,
+            Title = p.Title,
+            Description = p.Description,
+            Cost = p.Cost,
+            DateAdded = p.DateAdded,
+            ImagePath = p.ImagePath,
+        })
+        .ToListAsync();
 
-            Products = await _context.Products
-                .Select(p => new ProductGetVM
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Description = p.Description,
-                    Cost = p.Cost,
-                    DateAdded = p.DateAdded,
-                    ImagePath = p.ImagePath,
-                })
-                .ToListAsync(),
-        };
+        await FillViewBagAsync();
 
-        return View(vm);
+        return View(vms);
     }
 
     public async Task<IActionResult> Create()
     {
-        var vm = new ProductCreateVM();
-        await PopulateDropdownsAsync(vm);
-        return View(vm);
+        await FillViewBagAsync();
+        return View();
     }
 
     [HttpPost, AutoValidateAntiforgeryToken]
@@ -48,24 +52,32 @@ public class ProductController(TechanDbContext _context) : AdminBaseController
     {
         if (!ModelState.IsValid)
         {
-            await PopulateDropdownsAsync(model);
+            await FillViewBagAsync();
             return View(model);
         }
 
-        string? imagePath = null;
+        Category? category = await _context.Categories.FindAsync(model.CategoryId);
+        if (category == null) return NotFound();
 
+        Brand? brand = await _context.Brands.FindAsync(model.CategoryId);
+        if (brand == null) return NotFound();
+
+        string? imagePath = null;
         if (model.Image != null)
         {
-            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
-            string fullPath = Path.Combine("wwwroot", "uploads", fileName);
-
-            using var fs = new FileStream(fullPath, FileMode.Create);
-            await model.Image.CopyToAsync(fs);
-
-            imagePath = "/uploads/" + fileName;
+            try
+            {
+                imagePath = await model.Image.HandleUploadAsync(_rootPath);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Image", ex.Message);
+                await FillViewBagAsync();
+                return View(model);
+            }
         }
 
-        var product = new Product()
+        var entity = new Product()
         {
             Title = model.Title,
             Description = model.Description,
@@ -73,25 +85,106 @@ public class ProductController(TechanDbContext _context) : AdminBaseController
             Cost = model.Cost,
             CategoryId = model.CategoryId,
             ImagePath = imagePath,
-            DateAdded = DateTime.UtcNow,
         };
 
-        await _context.Products.AddAsync(product);
+        await _context.Products.AddAsync(entity);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
     }
 
-
-    // Helper Method
-    private async Task PopulateDropdownsAsync(ProductCreateVM model)
+    public async Task<IActionResult> Update(int id)
     {
-        model.Categories = await _context.Categories
+        Product? entity = await _context.Products.FindAsync(id);
+        if (entity == null)
+            return NotFound();
+
+        var model = new ProductUpdateVM
+        {
+            Id = entity.Id,
+            Title = entity.Title,
+            Description = entity.Description,
+            BrandId = entity.BrandId,
+            Cost = entity.Cost,
+            CategoryId = entity.CategoryId,
+            ImagePath = entity.ImagePath,
+        };
+
+        await FillViewBagAsync();
+
+        return View(model);
+    }
+
+    [HttpPost, AutoValidateAntiforgeryToken]
+    public async Task<IActionResult> Update(ProductUpdateVM model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        Product? entity = await _context.Products.FindAsync(model.Id);
+        if (entity == null)
+            return NotFound();
+
+        Category? category = await _context.Categories.FindAsync(model.CategoryId);
+        if (category == null) return NotFound();
+
+        Brand? brand = await _context.Brands.FindAsync(model.CategoryId);
+        if (brand == null) return NotFound();
+
+        string? imagePath = entity.ImagePath;
+        if (model.Image != null)
+        {
+            try
+            {
+                imagePath = await model.Image.HandleUploadAsync(_rootPath, entity.ImagePath);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Image", ex.Message);
+                await FillViewBagAsync();
+                return View(model);
+            }
+        }
+
+        entity.Id = model.Id;
+        entity.Title = model.Title;
+        entity.Description = model.Description;
+        entity.BrandId = model.BrandId;
+        entity.Cost = model.Cost;
+        entity.CategoryId = model.CategoryId;
+        entity.ImagePath = imagePath;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [AutoValidateAntiforgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        Product? entity = await _context.Products.FindAsync(id);
+        if (entity == null)
+            return NotFound();
+
+        if (entity.ImagePath != null)
+            System.IO.File.Delete(Path.Combine(_rootPath, entity.ImagePath));
+
+        _context.Remove(entity);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    #region helper methods
+    private async Task FillViewBagAsync()
+    {
+        ViewBag.Categories = await _context.Categories
             .Select(c => new CategoryGetVM { Id = c.Id, Name = c.Name })
             .ToListAsync();
 
-        model.Brands = await _context.Brands
+        ViewBag.Brands = await _context.Brands
             .Select(b => new BrandGetVM { Id = b.Id, Name = b.Name })
             .ToListAsync();
     }
+    #endregion
 }

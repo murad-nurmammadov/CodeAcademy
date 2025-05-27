@@ -1,5 +1,6 @@
 ﻿@using Techan.ViewModels.CategoryVMs
-@model Techan.ViewModels.ProductVMs.ProductIndexVM
+@using Techan.ViewModels.ProductVMs
+@model List<ProductGetVM>
 
 <section class="content-main">
     <div class="content-header">
@@ -18,7 +19,7 @@
                 <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
                     <select class="form-select">
                         <option selected>All category</option>
-                        @foreach (CategoryGetVM item in Model.Categories)
+                        @foreach (CategoryGetVM item in ViewBag.Categories)
                         {
                             <option>@item.Name</option>
                         }
@@ -28,7 +29,7 @@
                 <div class="col-md-2 col-6">
                     <input type="date" value="02.05.2022" class="form-control">
                 </div>
-                
+
                 <div class="col-md-2 col-6">
                     <select class="form-select">
                         <option selected>Status</option>
@@ -43,15 +44,15 @@
 
         <div class="card-body">
 
-            @foreach (var item in Model.Products)
+            @foreach (var item in Model)
             {
                 <article class="itemlist">
                     <div class="row align-items-center">
-                        
+
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
                                 <div class="left">
-                                    <img src="@item.ImagePath" class="img-sm img-thumbnail" alt="Item">
+                                    <img src="~/uploads/products/@item.ImagePath" class="img-sm img-thumbnail" alt="Item">
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-0">@item.Description</h6>
@@ -66,7 +67,7 @@
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
                             <span>@item.DateAdded</span>
                         </div>
-                        
+
                         @* Actions *@
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
                             <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm font-sm rounded btn-brand">
@@ -78,7 +79,7 @@
                             </a>
                         </div>
 
-                    </div> 
+                    </div>
                 </article>
             }
 

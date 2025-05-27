@@ -1,5 +1,5 @@
 ﻿@using Techan.ViewModels.ProductVMs
-@model ProductCreateVM
+@model ProductUpdateVM
 
 <section class="content-main">
     <form method="post" enctype="multipart/form-data">
@@ -14,6 +14,15 @@
                     <h6>1. General info</h6>
                 </div>
                 <div class="col-md-9">
+                    @* Current Logo *@
+                    @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+                    {
+                        <div class="col-md-9 mb-4">
+                            <p>Current Logo:</p>
+                            <img src="~/uploads/products/@Model.ImagePath" height="70" width="70" />
+                            <input type="hidden" asp-for="@Model.ImagePath" />
+                        </div>
+                    }
 
                     @* Title *@
                     <div class="mb-4">
@@ -57,7 +66,7 @@
                     <input asp-for="Cost" type="number" placeholder="Type here" class="form-control">
                     <span asp-validation-for="Cost" class="text-danger sm"></span>
                 </div>
-            </div> 
+            </div>
 
             <hr class="mb-4 mt-0">
 
@@ -92,7 +101,7 @@
                     <label asp-for="Image" class="form-label">Images</label>
                     <input asp-for="Image" class="form-control" type="file">
                     <span asp-validation-for="Image" class="text-danger sm"></span>
-                </div> 
+                </div>
             </div>
 
             @* Create Button *@

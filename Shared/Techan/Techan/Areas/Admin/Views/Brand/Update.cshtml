@@ -18,7 +18,7 @@
                         <div class="row">
 
                             @* Current Logo *@
-                            @if (!string.IsNullOrEmpty(Model.ImagePath))
+                            @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
                             {
                                 <div class="col-md-9 mb-4">
                                     <p>Current Logo:</p>

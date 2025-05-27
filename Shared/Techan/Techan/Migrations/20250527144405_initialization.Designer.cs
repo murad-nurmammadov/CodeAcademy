@@ -12,8 +12,8 @@ using Techan.Contexts;
 namespace Techan.Migrations
 {
     [DbContext(typeof(TechanDbContext))]
-    [Migration("20250527131646_updatedBrandsTable")]
-    partial class updatedBrandsTable
+    [Migration("20250527144405_initialization")]
+    partial class initialization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -298,14 +298,16 @@ namespace Techan.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 

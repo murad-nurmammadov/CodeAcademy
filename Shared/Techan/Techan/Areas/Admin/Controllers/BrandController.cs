@@ -50,21 +50,16 @@ public class BrandController : AdminBaseController
         string? imagePath = null;
         if (model.Image != null)
         {
-            if (!model.Image.hasValidType("image"))
+            try
             {
-                ModelState.AddModelError("Image", "Only image files are accepted!");
+                imagePath = await model.Image.HandleUploadAsync(_rootPath);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Image", ex.Message);
                 await FillViewBagAsync();
                 return View(model);
             }
-
-            if (!model.Image.hasValidSize())
-            {
-                ModelState.AddModelError("Image", "File size cannot exceed 2 MBs!");
-                await FillViewBagAsync();
-                return View(model);
-            }
-
-            imagePath = await model.Image.UploadAsync(_rootPath);
         }
 
         var entity = new Brand()
@@ -105,28 +100,21 @@ public class BrandController : AdminBaseController
         if (entity == null)
             return NotFound();
 
-        string imagePath = entity.ImagePath;
+        string? imagePath = entity.ImagePath;
         if (model.Image != null)
         {
-            if (!model.Image.hasValidType("image"))
+            try
             {
-                ModelState.AddModelError("Image", "Only image files are accepted!");
+                imagePath = await model.Image.HandleUploadAsync(_rootPath, entity.ImagePath);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Image", ex.Message);
                 await FillViewBagAsync();
                 return View(model);
             }
-
-            if (!model.Image.hasValidSize())
-            {
-                ModelState.AddModelError("Image", "File size cannot exceed 2 MBs!");
-                await FillViewBagAsync();
-                return View(model);
-            }
-
-            if (entity.ImagePath != null)
-                await model.Image.UploadAsync(_rootPath, entity.ImagePath);
-            else
-                imagePath = await model.Image.UploadAsync(_rootPath);
         }
+
 
         entity.Name = model.Name;
         entity.ImagePath = imagePath;

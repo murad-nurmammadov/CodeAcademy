@@ -29,4 +29,19 @@ public static class FileExtension
         using var fs = new FileStream(fullPath, FileMode.Create);
         await file.CopyToAsync(fs);
     }
+
+    public static async Task<string?> HandleUploadAsync(this IFormFile file, string rootPath, string? fileName = null, int kb = 2048)
+    {
+        if (!file.hasValidType("image"))
+            throw new Exception("Only image files are accepted!");
+
+        if (!file.hasValidSize(kb))
+            throw new Exception("File size cannot exceed 2 MBs!");
+
+        if (string.IsNullOrWhiteSpace(fileName))
+            return await file.UploadAsync(rootPath);  // this overload of UploadAsync return string fileName as well
+
+        await file.UploadAsync(rootPath, fileName);
+        return fileName;
+    }
 }
