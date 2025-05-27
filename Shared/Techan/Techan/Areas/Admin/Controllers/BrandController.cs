@@ -1,39 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Techan.Contexts;
+using Techan.Extensions;
 using Techan.Models;
 using Techan.ViewModels.BrandVMs;
 using Techan.ViewModels.CategoryVMs;
 
 namespace Techan.Areas.Admin.Controllers;
 
-public class BrandController(TechanDbContext _context) : AdminBaseController
+public class BrandController : AdminBaseController
 {
+    private readonly TechanDbContext _context;
+    private readonly IWebHostEnvironment _env;
+    private readonly string _rootPath;
+
+    public BrandController(TechanDbContext context, IWebHostEnvironment env)
+    {
+        _context = context;
+        _env = env;
+        _rootPath = Path.Combine(_env.WebRootPath, "uploads", "brands");
+        Directory.CreateDirectory(_rootPath);
+    }
+
     public async Task<IActionResult> Index()
     {
-        List<Brand> brands = await _context.Brands.ToListAsync();
-        List<BrandGetVM> brandVMs = brands.Select(b => new BrandGetVM
+        List<BrandGetVM> vms = await _context.Brands.Select(b => new BrandGetVM
         {
             Id = b.Id,
             Name = b.Name,
-            LogoPath = b.LogoPath,
-        }).ToList();
+            ImagePath = b.ImagePath,
+        }).ToListAsync();
 
-        List<Category> categories = await _context.Categories.ToListAsync();
-        List<CategoryGetVM> categoryVMs = categories.Select(c => new CategoryGetVM()
-        {
-            Id = c.Id,
-            Name = c.Name,
-        }).ToList(); 
+        await FillViewBagAsync();
 
-
-        var vm = new BrandIndexVM()
-        {
-            Brands = brandVMs,
-            Categories = categoryVMs,
-        };
-
-        return View(vm);
+        return View(vms);
     }
 
     public IActionResult Create()
@@ -47,26 +47,33 @@ public class BrandController(TechanDbContext _context) : AdminBaseController
         if (!ModelState.IsValid)
             return View(model);
 
-        string? logoPath = null;
-
-        if (model.Logo != null)
+        string? imagePath = null;
+        if (model.Image != null)
         {
-            string fileName = Guid.NewGuid() + Path.GetExtension(model.Logo.FileName);
-            string fullPath = Path.Combine("wwwroot", "uploads", fileName);
+            if (!model.Image.hasValidType("image"))
+            {
+                ModelState.AddModelError("Image", "Only image files are accepted!");
+                await FillViewBagAsync();
+                return View(model);
+            }
 
-            using var stream = new FileStream(fullPath, FileMode.Create);
-            await model.Logo.CopyToAsync(stream);
+            if (!model.Image.hasValidSize())
+            {
+                ModelState.AddModelError("Image", "File size cannot exceed 2 MBs!");
+                await FillViewBagAsync();
+                return View(model);
+            }
 
-            logoPath = "/uploads/" + fileName;
+            imagePath = await model.Image.UploadAsync(_rootPath);
         }
 
-        var brand = new Brand
+        var entity = new Brand()
         {
             Name = model.Name,
-            LogoPath = logoPath,
+            ImagePath = imagePath,
         };
 
-        await _context.Brands.AddAsync(brand);
+        await _context.Brands.AddAsync(entity);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
@@ -74,19 +81,18 @@ public class BrandController(TechanDbContext _context) : AdminBaseController
 
     public async Task<IActionResult> Update(int id)
     {
-        Brand? brand = await _context.Brands.FindAsync(id);
-
-        if (brand == null)
+        Brand? entity = await _context.Brands.FindAsync(id);
+        if (entity == null)
             return NotFound();
 
-        var vm = new BrandUpdateVM
+        var model = new BrandUpdateVM
         {
-            Id = id,
-            Name = brand.Name,
-            LogoPath = brand.LogoPath,
+            Id = entity.Id,
+            Name = entity.Name,
+            ImagePath = entity.ImagePath,
         };
 
-        return View(vm);
+        return View(model);
     }
 
     [HttpPost, AutoValidateAntiforgeryToken]
@@ -95,33 +101,35 @@ public class BrandController(TechanDbContext _context) : AdminBaseController
         if (!ModelState.IsValid)
             return View(model);
 
-        Brand? brand = await _context.Brands.FindAsync(model.Id);
-
-        if (brand == null)
+        Brand? entity = await _context.Brands.FindAsync(model.Id);
+        if (entity == null)
             return NotFound();
 
-        // Add new logo (if any)
-        if (model.NewLogo != null)
+        string imagePath = entity.ImagePath;
+        if (model.Image != null)
         {
-            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.NewLogo.FileName);
-            string logoPath = "/uploads/" + fileName;
-            string fullPath = Path.Combine("wwwroot", "uploads", fileName);
-
-            using var fs = new FileStream(fullPath, FileMode.Create);
-            await model.NewLogo.CopyToAsync(fs);
-
-            // Delete old logo if exists
-            if (!string.IsNullOrEmpty(brand.LogoPath))
+            if (!model.Image.hasValidType("image"))
             {
-                string oldFullPath = Path.Combine("wwwroot", brand.LogoPath.TrimStart('/'));
-                if (System.IO.File.Exists(oldFullPath))
-                    System.IO.File.Delete(oldFullPath);
+                ModelState.AddModelError("Image", "Only image files are accepted!");
+                await FillViewBagAsync();
+                return View(model);
             }
 
-            brand.LogoPath = logoPath;
+            if (!model.Image.hasValidSize())
+            {
+                ModelState.AddModelError("Image", "File size cannot exceed 2 MBs!");
+                await FillViewBagAsync();
+                return View(model);
+            }
+
+            if (entity.ImagePath != null)
+                await model.Image.UploadAsync(_rootPath, entity.ImagePath);
+            else
+                imagePath = await model.Image.UploadAsync(_rootPath);
         }
 
-        brand.Name = model.Name;
+        entity.Name = model.Name;
+        entity.ImagePath = imagePath;
 
         await _context.SaveChangesAsync();
 
@@ -131,24 +139,27 @@ public class BrandController(TechanDbContext _context) : AdminBaseController
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        Brand? brand = await _context.Brands.FindAsync(id);
-
-        if (brand == null)
+        Brand? entity = await _context.Brands.FindAsync(id);
+        if (entity == null)
             return NotFound();
 
-        if (!string.IsNullOrWhiteSpace(brand.LogoPath))
-        {
-            // Convert from web path to physical path safely
-            string safeRelativePath = brand.LogoPath.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString());
-            string fullPath = Path.Combine("wwwroot", safeRelativePath);
+        if (entity.ImagePath != null)
+            System.IO.File.Delete(Path.Combine(_rootPath, entity.ImagePath));
 
-            if (System.IO.File.Exists(fullPath))
-                System.IO.File.Delete(fullPath);
-        }
-
-        _context.Remove(brand);
+        _context.Remove(entity);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
     }
+
+    #region helper methods
+    public async Task FillViewBagAsync()
+    {
+        ViewBag.Categories = await _context.Categories.Select(c => new CategoryGetVM()
+        {
+            Id = c.Id,
+            Name = c.Name,
+        }).ToListAsync();
+    }
+    #endregion
 }

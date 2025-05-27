@@ -1,6 +1,6 @@
 ﻿@using Techan.ViewModels.BrandVMs
 @using Techan.ViewModels.CategoryVMs
-@model BrandIndexVM
+@model List<BrandGetVM>
 
 <section class="content-main">
     <div class="content-header">
@@ -21,9 +21,9 @@
                 <div class="col-lg-2 col-6">
                     <div class="custom_select">
                         <select class="form-select select-nice">
-                            <option selected>Categories</option>
+                            <option value="">Categories</option>
 
-                            @foreach (CategoryGetVM item in Model.Categories)
+                            @foreach (CategoryGetVM item in ViewBag.Categories)
                             {
                                 <option>@item.Name</option>
                             }
@@ -40,12 +40,12 @@
         <div class="card-body">
             <div class="row gx-3">
 
-                @foreach (BrandGetVM item in Model.Brands)
+                @foreach (BrandGetVM item in Model)
                 {
                     <div class="col-xl-2 col-lg-3 col-md-4 col-6">
                         <figure class="card border-1">
                             <div class="card-header bg-white text-center">
-                                <img height="76" src="@item.LogoPath" class="img-fluid" alt="Logo">
+                                <img height="70" width="70" src="~/uploads/brands/@item.ImagePath" class="img-fluid" alt="Logo">
                             </div>
                             <figcaption class="card-body text-center">
                                 <h6 class="card-title m-0">@item.Name</h6>
@@ -66,7 +66,7 @@
                     </div>
                 }
 
-            </div> 
-        </div> 
+            </div>
+        </div>
     </div>
 </section>

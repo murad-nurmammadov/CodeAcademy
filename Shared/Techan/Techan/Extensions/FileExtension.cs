@@ -20,7 +20,7 @@ public static class FileExtension
         using var fs = new FileStream(fullPath, FileMode.Create);
         await file.CopyToAsync(fs);
 
-        return fullPath;
+        return fileName;
     }
 
     public static async Task UploadAsync(this IFormFile file, string rootPath, string fileName)

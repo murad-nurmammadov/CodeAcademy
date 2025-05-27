@@ -18,11 +18,12 @@
                         <div class="row">
 
                             @* Current Logo *@
-                            @if (!string.IsNullOrEmpty(Model.LogoPath))
+                            @if (!string.IsNullOrEmpty(Model.ImagePath))
                             {
                                 <div class="col-md-9 mb-4">
                                     <p>Current Logo:</p>
-                                    <img src="@Model.LogoPath" width="70" />
+                                    <img src="~/uploads/brands/@Model.ImagePath" height="70" width="70" />
+                                    <input type="hidden" asp-for="@Model.ImagePath" />
                                 </div>
                             }
 
@@ -35,9 +36,9 @@
 
                             @* Logo *@
                             <div class="col-md-9 mb-4">
-                                <label asp-for="NewLogo" class="form-label">Image</label>
-                                <input asp-for="NewLogo" type="file" class="form-control">
-                                <span asp-validation-for="NewLogo" class="text-danger"></span>
+                                <label asp-for="Image" class="form-label">Image</label>
+                                <input asp-for="Image" type="file" class="form-control">
+                                <span asp-validation-for="Image" class="text-danger"></span>
                             </div>
 
                             @* Update Button *@

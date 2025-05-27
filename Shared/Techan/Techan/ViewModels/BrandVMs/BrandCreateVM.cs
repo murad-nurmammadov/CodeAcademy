@@ -4,7 +4,7 @@ namespace Techan.ViewModels.BrandVMs;
 
 public class BrandCreateVM
 {
-    [MaxLength(100)]
+    [MaxLength(64)]
     public string Name { get; set; }
-    public IFormFile? Logo { get; set; }
+    public IFormFile? Image { get; set; }
 }

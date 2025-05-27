@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Techan.Contexts;
 
@@ -11,9 +12,11 @@ using Techan.Contexts;
 namespace Techan.Migrations
 {
     [DbContext(typeof(TechanDbContext))]
-    partial class TechanDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250527131646_updatedBrandsTable")]
+    partial class updatedBrandsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
