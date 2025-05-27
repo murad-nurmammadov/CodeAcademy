@@ -8,8 +8,7 @@ using Techan.ViewModels.ProductVMs;
 
 namespace Techan.Areas.Admin.Controllers;
 
-[Area("Admin")]
-public class ProductController(TechanDbContext _context) : Controller
+public class ProductController(TechanDbContext _context) : AdminBaseController
 {
     // Check everything below
     // TODO everything below

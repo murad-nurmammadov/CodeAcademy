@@ -6,8 +6,7 @@ using Techan.ViewModels.CategoryVMs;
 
 namespace Techan.Areas.Admin.Controllers;
 
-[Area("Admin")]
-public class CategoryController(TechanDbContext _context) : Controller
+public class CategoryController(TechanDbContext _context) : AdminBaseController
 {
     // CHECK everything below
     // TODO everything below

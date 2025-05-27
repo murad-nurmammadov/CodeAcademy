@@ -7,8 +7,7 @@ using Techan.ViewModels.CategoryVMs;
 
 namespace Techan.Areas.Admin.Controllers;
 
-[Area("Admin")]
-public class BrandController(TechanDbContext _context) : Controller
+public class BrandController(TechanDbContext _context) : AdminBaseController
 {
     public async Task<IActionResult> Index()
     {

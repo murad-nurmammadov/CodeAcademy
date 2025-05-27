@@ -2,8 +2,7 @@
 
 namespace Techan.Areas.Admin.Controllers;
 
-[Area("Admin")]
-public class SellersController : Controller
+public class SellersController : AdminBaseController
 {
     public IActionResult Index()
     {

@@ -2,7 +2,7 @@
 
 namespace Techan.Areas.Admin.Controllers;
 
-public class OrdersController : AdminBaseController
+public class DashboardController : AdminBaseController
 {
     public IActionResult Index()
     {

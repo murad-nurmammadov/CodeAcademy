@@ -3,8 +3,7 @@ using Techan.Models;
 
 namespace Techan.Areas.Admin.Controllers;
 
-[Area("Admin")]
-public class SliderController : Controller
+public class SliderController : AdminBaseController
 {
     public IActionResult Create()
     {
